@@ -6,8 +6,14 @@
 {{ $title }}
 @endsection
 
+@section('head_options')
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Datos Certificado</h1>
+  </div>
+@endsection
+
 @section('content')
-    <form  @unless($activo) disabled @endunless action="@if(empty($certificate)) {{ url("certificates") }} @else {{ route('certificates.update',['codigo'=>str_pad($certificate->id,10,'0',STR_PAD_LEFT)]) }} @endif" method="POST">
+    <form  action="@if(empty($certificate)) {{ url("certificates") }} @else {{ route('certificates.update',['codigo'=>$certificate->id]) }} @endif" method="POST">
         @unless(empty($certificate)) 
             {{ method_field('PUT') }} 
         @endunless
@@ -16,145 +22,116 @@
         @if ($errors->any())
             @include('includes.error', ['errors' => $errors])
         @endif
-        
-        <input type="hidden" name="numero" @unless(empty($certificate)) value="{{ $certificate->numero }}" @else value="{{ $orden_codigo['numero'] }}"  @endunless/>
-        <input type="hidden" name="anio" @unless(empty($certificate)) value="{{ $certificate->anio }}" @else  value="{{ $orden_codigo['anio'] }}" @endunless />
+    
         <div class="row">
-            <div class="col-md-3 mb-3">
-                <label for="codigo" >Código de Orden</label>
-                <input type="text" disabled class="form-control form-control-sm" name = "codigo" id="codigo" placeholder="Example 00000012018"
-                        @unless(empty($certificate)) value="{{ str_pad($certificate->id,10,'0',STR_PAD_LEFT) }}" @else value="{{ str_pad($orden_codigo['numero'],6,'0',STR_PAD_LEFT).$orden_codigo['anio'] }}" @endunless/>
-            </div>
-            <div class="col-md-3 mb-3">
-                <label for="fecha">Fecha Emisión</label>
-                <input type="date" class="form-control form-control-sm" id="fecha_emision" name ="fecha_emision" placeholder="dd/mm/aaaa" @unless(empty($certificate)) value="{{ $certificate->fecha_emision }}" @else value="{{ old('fecha_emision') }}" @endunless/>
-            </div>
             <div class="col-md-6 mb-3">
-                <label for="proveedor">Proveedor</label>
-                <div class="input-group input-group-sm">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-primary form-control-sm" type="button" id="btn_buscar">Buscar</button>
-                    </div>
-                    <input type="text" class="form-control form-control-sm " disabled id="proveedor" name="proveedor" placeholder="Proveedor" @unless(empty($certificate)) value="{{ $certificate->ruc }} - {{ $certificate->razon_social }}" @else value="{{ old('proveedor') }}" @endunless aria-describedby="btn_buscar"/>
-                    <input type="hidden" id="proveedor_id" name="proveedor_id" @unless(empty($certificate)) value="{{ $certificate->proveedor_id }}" @else value="{{ old('proveedor_id') }}" @endunless />
-                </div>
+                <label for="codigo_certificado" >Número de CAT</label>
+                <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" name = "codigo_certificado" id="codigo_certificado" placeholder="Example YF-001234-2018"
+                        @unless(empty($certificate)) value="{{ $certificate->codigo_certificado }}" @else value="{{ old('codigo_certificado') }}" @endunless/>
             </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <label for="destino">Destino</label>
-                <div class="input-group">
-                    @unless(empty($des_recurso))
-                        <select name="destino" id="destino" class="form-control form-control-sm" >
-                            <option value="0">Seleccionar Destino</option>
-                            @foreach ($des_recurso as $des)
-                                <option value="{{ $des->codtab }}" @unless(empty($certificate)) @if($certificate->destino == $des->codtab ) selected @endif @else @if(old('destino') == $des->codtab ) selected @endif @endif >{{ $des->descor }}</option>    
-                            @endforeach
-                        </select>
-                    @else
-                        <input type="text" class="form-control form-control-sm " value="{{ $certificate->descor }}" />
-                    @endunless
-                </div>
-            </div>
-            <div class="col-md-4 mb-3">
-                <label for="condicion_pago">Forma de pago</label>
-                <div class="input-group">
-                    @unless(empty($forma_pago))
-                        <select name="condicion_pago" id="condicion_pago" class="form-control form-control-sm">
-                            <option value="0">Forma de Pago</option>
-                            @foreach ($forma_pago as $forma)
-                                <option value="{{ $forma->codtab }}" @unless(empty($certificate)) @if($certificate->condicion_pago == $forma->codtab ) selected @endif @else @if(old('destino') == $forma->codtab ) selected @endif @endif>{{ $forma->descor }}</option>    
-                            @endforeach
-                        </select>
-                    @else
-                        <input type="text" class="form-control form-control-sm " value="{{ $certificate->condicion_pago }}" />    
-                    @endunless
-                </div>
-            </div>
-            <div class="col-md-4 mb-3">
-                <label for="plazo_dias">Plazo de Entrega</label>
-                <div class="input-group">
-                    <input type="text" class="form-control form-control-sm" id="plazo_dias" name ="plazo_dias" placeholder="Plazo" @unless(empty($certificate)) value="{{ $certificate->plazo_dias }}" @else value="{{ old('plazo_dias') }}" @endunless/>
-                </div>
+            <div class="col-md-3 mb-3">
+                <label for="fecha_emision">Fecha Emisión</label>
+                <input type="date" @unless($activo) disabled @endunless class="form-control form-control-sm" id="fecha_emision" name ="fecha_emision" placeholder="dd/mm/aaaa" @unless(empty($certificate)) value="{{ $certificate->fecha_emision }}" @else value="{{ old('fecha_emision') }}" @endunless/>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="almacen">Almacen</label>
+            <div class="col-md-3 mb-3">
+                <label for="ini_vigencia">Inicio Vigencia</label>
+                <input type="date" @unless($activo) disabled @endunless class="form-control form-control-sm" id="ini_vigencia" name ="ini_vigencia" placeholder="dd/mm/aaaa" @unless(empty($certificate)) value="{{ $certificate->ini_vigencia }}" @else value="{{ old('ini_vigencia') }}" @endunless/>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="fin_vigencia">Fin Vigencia</label>
+                <input type="date" @unless($activo) disabled @endunless class="form-control form-control-sm" id="fin_vigencia" name ="fin_vigencia" placeholder="dd/mm/aaaa" @unless(empty($certificate)) value="{{ $certificate->fin_vigencia }}" @else value="{{ old('fin_vigencia') }}" @endunless/>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="ini_control">Inicio Control Policial</label>
+                <input type="date" @unless($activo) disabled @endunless class="form-control form-control-sm" id="ini_control" name ="ini_control" placeholder="dd/mm/aaaa" @unless(empty($certificate)) value="{{ $certificate->ini_control }}" @else value="{{ old('ini_control') }}" @endunless/>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="fin_control">Fin Control Policial</label>
+                <input type="date" @unless($activo) disabled @endunless class="form-control form-control-sm" id="fin_control" name ="fin_control" placeholder="dd/mm/aaaa" @unless(empty($certificate)) value="{{ $certificate->fin_control }}" @else value="{{ old('fin_control') }}" @endunless/>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="apellido_paterno">Apellido Paterno del Asociado</label>
                 <div class="input-group">
-                    <input type="text" class="form-control form-control-sm" id="almacen" name ="almacen" placeholder="Almacen" @unless(empty($certificate)) value="{{ $certificate->almacen}}" @else value="{{ old('almacen') }}" @endunless/>
+                    <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" id="apellido_paterno" name ="apellido_paterno" placeholder="Apellido Paterno" @unless(empty($certificate)) value="{{ $certificate->apellido_paterno }}" @else value="{{ old('apellido_paterno') }}" @endunless/>
                 </div>
             </div>
-            <div class="col-md-6 mb-3">
-                <label for="direccion">Dirección</label>
+            <div class="col-md-4 mb-3">
+                <label for="apellido_materno">Apellido Materno del Asociado</label>
                 <div class="input-group">
-                    <input type="text" class="form-control form-control-sm" id="direccion" name ="direccion" placeholder="Dirección" @unless(empty($certificate)) value="{{ $certificate->direccion}}" @else value="{{ old('direccion') }}" @endunless/>
+                    <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" id="apellido_materno" name ="apellido_materno" placeholder="Apellido Materno" @unless(empty($certificate)) value="{{ $certificate->apellido_materno }}" @else value="{{ old('apellido_materno') }}" @endunless/>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="nombre">Nombre</label>
+                <div class="input-group">
+                    <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" id="nombre" name ="nombre" placeholder="Nombres" @unless(empty($certificate)) value="{{ $certificate->nombre }}" @else value="{{ old('nombre') }}" @endunless/>
                 </div>
             </div>
         </div>
 
-        <div class="row align-items-end ">
-            <div class="col-md-11 mb-3">
-                    <label for="condiciones">Condiciones de entrega</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control form-control-sm" id="condiciones" name ="condiciones_entrega" placeholder="Condiciones de entrega" @unless(empty($certificate)) value="{{ $certificate->condiciones_entrega }}"  @else value="{{ old('condiciones_entrega') }}" @endunless/>
-                    </div>
-            </div>
-            <div class="col-md-1 mb-3">
-                <div class="input-group">
-                    <button type="button" @if(empty($certificate)) disabled @endif class="btn btn-sm btn-primary" id="btn_detalle">Detalle</button>
-                </div>
-            </div>
-        </div>
-        <h1></h1>
         <div class="row">
             <div class="col-md-12 mb-3">
-                <div class="table-responsive">
-                    <table class="table table-striped table-sm" id="tabla_detail">
-                        <thead>
-                            <tr>
-                            <th scope="col">Item</th>
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Descripción</th>
-                            <th scope="col">Precio</th>
-                            <th scope="col">Subtotal</th>
-                            <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @unless(empty($details))
-                                @forelse ($details as $det)
-                                    <tr>
-                                        <td>{{ $det->numero_item }}</td>
-                                        <td>{{ $det->cantidad }}</td>
-                                        <td>{{ $det->descripcion }}</td>
-                                        <td>{{ $det->precio_unitario}}</td>
-                                        <td>{{ $det->total }}</td>
-                                        <td> 
-                                            <a href="" class="sel badge badge-primary">eliminar</a>
-                                        </td>   
-                                    </tr>
-                                @empty 
-                                    <tr>    
-                                        <td colspan="6">
-                                            <h6>No se ha registrado items.</h6>
-                                        </td>
-                                    </tr>
-                                @endforelse            
-                            @else
-                                <tr>    
-                                    <td colspan="6">
-                                        <h6>No se ha registrado items.</h6>
-                                    </td>
-                                </tr>
-                            @endunless                      
-                        </tbody>
-                    </table>
+                <label for="razon_social">Razón Social</label>
+                <div class="input-group">
+                    <input type="text"  @unless($activo) disabled @endunless class="form-control form-control-sm" id="razon_social" name ="razon_social" placeholder="Razón Social" @unless(empty($certificate)) value="{{ $certificate->razon_social }}" @else value="{{ old('razon_social') }}" @endunless/>
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="tipo_documento">Tipo Documento</label>
+                <div class="input-group">
+                    <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" id="tipo_documento" name ="tipo_documento" placeholder="Tipo Documento" @unless(empty($certificate)) value="{{ $certificate->tipo_documento }}" @else value="{{ old('tipo_documento') }}" @endunless/>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="nro_documento">Número de Documento</label>
+                <div class="input-group">
+                    <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" id="nro_documento" name ="nro_documento" placeholder="Nro. Documento" @unless(empty($certificate)) value="{{ $certificate->nro_documento }}" @else value="{{ old('nro_documento') }}" @endunless/>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="provincia">Provincia</label>
+                <div class="input-group">
+                    <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" id="provincia" name ="provincia" placeholder="Ejemplo PIURA" @unless(empty($certificate)) value="{{ $certificate->provincia }}" @else value="{{ old('provincia') }}" @endunless/>
+                </div>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <label for="placa">Placa del vehiculo</label>
+                <div class="input-group">
+                    <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" id="placa" name ="placa" placeholder="Placa" @unless(empty($certificate)) value="{{ $certificate->placa }}" @else value="{{ old('placa') }}" @endunless/>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="categoria">Categoría del vehículo</label>
+                <div class="input-group">
+                    <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" id="categoria" name ="categoria" placeholder="Categoría del vehículo" @unless(empty($certificate)) value="{{ $certificate->categoria }}" @else value="{{ old('categoria') }}" @endunless/>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="uso">Uso</label>
+                <div class="input-group">
+                    <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" id="uso" name ="uso" placeholder="Uso del vehículo" @unless(empty($certificate)) value="{{ $certificate->uso }}" @else value="{{ old('uso') }}" @endunless/>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="tipo_vehiculo">Tipo de Vehículo</label>
+                <div class="input-group">
+                    <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" id="tipo_vehiculo" name ="tipo_vehiculo" placeholder="Tipo de vehículo" @unless(empty($certificate)) value="{{ $certificate->tipo_vehiculo }}" @else value="{{ old('tipo_vehiculo') }}" @endunless/>
+                </div>
+            </div>           
+        </div>
+        
 
         @if ($activo)
             <div class="btn-toolbar mb-2 mb-md-0">
@@ -166,8 +143,6 @@
         @endif
         
     </form>
-    @include('proveedores.search')
-    @include('purchasecertificatedetail.form')
     @unless ($activo)
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
@@ -177,125 +152,3 @@
     @endunless
 @endsection
 
-@section('script')
-<script src="{{ asset('js/util.js') }}" ></script>
-<script >
-    var rpta_srv;
-    $(document).ready(function(){
-        $( "#proveedor_name" ).keyup(function(e) {
-            limpiarTabla();
-            searchProveedor($( "#proveedor_name" ).val());
-        });
-
-        $( "#cantidad" ).keyup(function(e) {
-            var keycode = e.keyCode;
-            if(caractesValido(e)){
-                $('#total').val(calcularTotal($(this).val(),$('#precio_unitario').val()));
-            }
-        });
-
-        $( "#precio_unitario" ).keyup(function(e) {
-            var keycode = e.keyCode;
-            var res = calcularTotal($('#cantidad').val(),$(this).val());
-            if(caractesValido(e)){
-                $('#total').val(res);
-                $('#h_total').val(res);
-            }
-        });
-
-        $( "#btn_buscar" ).click(function() {
-            $( "#proveedor_name" ).val('');
-            limpiarTabla();
-            $('#md_search').modal('show');
-        });
-
-        $( "#btn_detalle" ).click(function() {
-            $('#purchase_certificate_id').val($('#codigo').val());
-            limpiarformulario();   
-            $('#md_detail').modal('show');
-        });
-
-        $( "tbody").on("click", "a.sel",function(){
-            $( "#proveedor_id" ).val($(this).attr('val_id'));
-            $( "#proveedor" ).val($(this).attr('val_ruc')+' - '+$(this).attr('val_razon'));
-            $( "#md_search" ).modal('hide');
-        });
-
-        $("#frm_detail").submit(function(){
-            ajax_post($("#frm_detail").attr('action'),$("#frm_detail").serialize());
-            return false;
-        });
-    });
-
-
-    function caractesValido(e){
-        return true;
-    }
-
-    function searchProveedor(valor){
-        ajax_get("{{ url('proveedores/search') }}",valor);
-    }
-
-    function calcularTotal(cant,precio){
-        if(cant=='') cant = 0 ;
-        if(precio=='') precio = 0 ;
-        return parseFloat(cant)*parseFloat(precio);
-    }
-
-    function ajax_get(ruta,data){
-        $.getJSON( ruta+='/'+data , {_token: '{!! csrf_token() !!}'})
-        .done(function( data, textStatus, jqXHR ) {
-            data.forEach(prov => {
-                $("#tabla_prov tbody" ).append(
-                    '<tr> <td> '+prov.id+'</td>'+
-                    '<td> '+prov.ruc+'</td> '+ 
-                    '<td>'+prov.razon_social+'</td>'+
-                    '<td> <a class="sel badge badge-primary" href="#" val_ruc = "'+prov.ruc+'" val_id="'+prov.id+'" val_razon="'+prov.razon_social+'" >Seleccionar</a></td>'+
-                    '</tr>');
-            });
-        })
-        .fail(function( jqXHR, textStatus, errorThrown ) {
-            if ( console && console.log ) {
-                console.log( "Algo ha fallado: " +  textStatus);
-            }
-        });
-    }   
-
-
-    function procesar_rpta(rpta){
-        $('#error').addClass('d-none');
-        if(rpta.success){
-            $("#tabla_detail tbody" ).append(
-                '<tr> <td> '+rpta.id+'</td>'+
-                '<td> '+$('#cantidad').val()+'</td> '+ 
-                '<td>'+$('#descripcion').val()+'</td>'+
-                '<td>'+$('#precio_unitario').val()+'</td>'+
-                '<td>'+$('#total').val()+'</td>'+
-                '<td> <a class="sel badge badge-primary" href="#" id_item = "'+rpta.id+'" val_po="'+$('#purchase_certificate_id').val()+'" >Eliminar</a></td>'+
-                '</tr>');
-        }   
-        else{
-            mensajes =  rpta.mensajes;
-            $('#error').removeClass('d-none');
-            mensajes.forEach(err => {
-                $('#error ul').append('<li>'+err+'</li>');
-            });
-        }
-    }
-
-    function limpiarTabla(){
-        $("#tabla_prov tbody tr" ).remove();
-    }
-
-    function limpiarformulario(){
-        $("#cantidad" ).val('');
-        $("#unidad_medida" ).val('');
-        $("#descripcion" ).val('');
-        $("#precio_unitario" ).val('');
-        $("#total" ).val('');
-        $('#error').addClass('d-none');
-        $("#tabla_prov tbody tr" ).remove();
-    }
-    
-</script>
-@endsection

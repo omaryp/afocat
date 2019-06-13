@@ -20,7 +20,7 @@
             <thead>
                 <tr>
                 <th>Código</th>
-                <th>Nombre</th>
+                <th>Asociado</th>
                 <th>Placa</th>
                 <th>Inicio Vigencia</th>
                 <th>Fin Vigencia</th>
@@ -31,7 +31,11 @@
                     @forelse ($certificates as $cert)
                     <tr>
                         <td>{{ $cert->codigo_certificado }}</td>
-                        <td>{{ $cert->nombre }} {{ $cert->apellido_paterno }} {{ $cert->apellido_materno }}</td>
+                        @if($cert->tipo_documento == 'DNI')
+                            <td>{{ $cert->nombre }} {{ $cert->apellido_paterno }} {{ $cert->apellido_materno }}</td>
+                        @else
+                            <td>{{ $cert->razon_social }}</td>
+                        @endif
                         <td>{{ $cert->placa }}</td>
                         <td>{{ $cert->ini_vigencia}}</td>
                         <td>{{ $cert->fin_vigencia}}</td>
@@ -39,7 +43,6 @@
                             <div class="btn-group mr-2">
                                 <a href="{{ route('certificates.show',['codigo'=> $cert->id]) }}" class="btn btn-outline-secondary btn-sm"><i class="fas fa-fw fa-check-square"></i></a>
                                 <a href="{{ route('certificates.edit',['codigo'=> $cert->id]) }}" class="btn btn-outline-secondary btn-sm"><i class="fas fa-fw fa-pen-square"></i></a>
-                                <a class="btn btn-outline-secondary btn-sm"><i class="fas fa-fw fa-trash-alt"></i></a>
                             </div>
                         </td>   
                     </tr>

@@ -20,9 +20,14 @@ class FileLoadController extends Controller
     public static function store($nombre_real,$nombre_carga){
         $file = new FileLoad();
         $file->nombre = $nombre_real;
-        $file->ubicacion = "storage/app/fileafocat/$nombre_carga";
+        $file->ubicacion = $nombre_carga;
         $file->fecha_carga = date('Y-m-d h:m:s');
         $file->estado = 0;
         $file->save();
+    }
+
+    public static function getArchivo($id){
+        $file = FileLoad::find($id);
+        return $file;
     }
 }

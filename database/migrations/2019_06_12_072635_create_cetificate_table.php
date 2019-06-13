@@ -22,21 +22,18 @@ class CreateCetificateTable extends Migration
             $table->date('fin_vigencia');
             $table->date('ini_control');
             $table->date('fin_control');
-            $table->string('placa',20);
             $table->string('apellido_paterno',100)->default('');
             $table->string('apellido_materno',100)->default('');
             $table->string('nombre',200)->default('');
+            $table->string('razon_social',300)->default('');
+            $table->string('tipo_documento',5)->default('');
+            $table->string('nro_documento',200)->default('');
+            $table->string('placa',20);
             $table->string('provincia',50)->default('')->nullable();
-            $table->string('uso',100)->default('')->nullable();
-            $table->date('fecha_emision');
-            $table->time('hora_emision');
             $table->string('categoria',4)->nulable();
+            $table->string('uso',100)->default('')->nullable();
             $table->string('tipo_vehiculo',100)->nulable();
-            $table->string('marca',30)->nulable();
-            $table->string('modelo',30)->nulable();
-            $table->string('color',30)->nulable();
-            $table->string('nro_motor',50)->nulable();
-            $table->string('chasis',50)->nulable();
+            $table->date('fecha_emision');
             $table->timestamps();
         });
     }

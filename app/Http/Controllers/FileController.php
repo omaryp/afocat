@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use File;
 
 class FileController extends Controller
 {
@@ -16,16 +17,33 @@ class FileController extends Controller
     public function load(Request $request){
 
         $data = request()->validate([
-            'carga'=>'required',
+            'archivo'=>'required',
         ]);
-
-        $file = $request->file('carga');
+        
+        $file = $request->file('archivo');
         $nombre_real = $file->getClientOriginalName();
-        $ruta_servidor = $file->store('ventas');
+        $ruta_servidor = $file->store('fileafocat');
         FileLoadController::store($nombre_real,$ruta_servidor);
         $files = FileLoadController::listarArchivos();
         $title = 'Carga de Archivos';
         $mensaje = 'Archivo cargado corectamente';
         return view('file.form',compact('title','mensaje','files'));
+    }
+
+    public function destroy($id){
+        $fileLoad = FileLoadController::getArchivo($id);
+        if(File::exists(storage_path('app').'/'.$fileLoad->ubicacion)){
+            File::delete(storage_path('app').'/'.$fileLoad->ubicacion);
+            $fileLoad->delete();
+            return response()->json([
+                'success' => true,
+                'archivo' => $fileLoad->ubicacion,
+            ], 200);
+        }else{
+            return response()->json([
+                'success' => false,
+                'mensajes' => 'El archivo no existe',
+            ], 404);
+        }
     }
 }

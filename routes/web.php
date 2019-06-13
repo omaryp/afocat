@@ -18,6 +18,11 @@ Route::get('/', function () {
 
 Route::get('/storage', 'FileController@index')->name('storage');
 Route::post('/load', 'FileController@load');
+Route::delete('/storage/{id}','FileController@destroy')
+->where('id','[0-9]+');
+
+
+Route::post('/excel','ExcelController@procesar')->name('excel');
 
 
 //certificados
@@ -38,6 +43,3 @@ Route::get('/certificates/editar/{codigo}','CertificateController@edit')
 
 Route::put('/certificates/{codigo}','CertificateController@update')
 ->name('certificates.update');
-
-Route::get('/certificates/search/{rz}','CertificateController@search')
-->name('proveedores.search');
