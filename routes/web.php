@@ -43,3 +43,5 @@ Route::get('/certificates/editar/{codigo}','CertificateController@edit')
 
 Route::put('/certificates/{codigo}','CertificateController@update')
 ->name('certificates.update');
+
+Route::get('/consulta/{placa}','CertificateController@consulta');

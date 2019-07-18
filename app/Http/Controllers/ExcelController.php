@@ -4,33 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Modes\FileLoadController;
+use File;
+use App\Imports\CertificateImport;
 
 class ExcelController extends Controller
 {
     //
     public function procesar(){
         $data= request()->all();
-        $id = $data['codigo'];
+        $id = $data['id'];
         $fileLoad = FileLoadController::getArchivo($id);
         $ruta = storage_path('app').'/'.$fileLoad->ubicacion;
         if (File::exists($ruta)){
-            cargarExcel($ruta);
+            $this::cargarExcel($ruta);
         }else {
             $mensaje = "No existe el archivo";      
         }
     }
 
-    public function cargaExcel($ruta){
-        Excel::load($ruta, function($reader) {
-            foreach ($reader->get() as $book) {
-                Book::create([
-                'name' => $book->title,
-                'author' =>$book->author,
-                'year' =>$book->publication_year
-                ]);
-            }
-        });
-        return Book::all();
+    public static function cargarExcel($ruta){
+        Excel::import(new CertificateImport,$ruta);
     }
 }

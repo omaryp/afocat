@@ -17,11 +17,13 @@ class CertificateController extends Controller
                     'certificates.fin_vigencia',
                     'certificates.apellido_paterno', 
                     'certificates.apellido_materno',
+                    'certificates.tipo_documento',
                     'certificates.nombre',
                     'certificates.placa')
-                ->orderBy('certificates.created_at', 'desc')
-                ->paginate(7);
+                ->orderBy('certificates.codigo_certificado', 'asc')
+                ->paginate(10);
         $title = 'Listado de Ventas de Certificados';  
+        //dd($certificates);
         return view('certificate.index',compact('certificates','title'));
     }
 
@@ -78,7 +80,7 @@ class CertificateController extends Controller
     }
 
     public function show($codigo){
-        $cert = Certificate::select(
+        $certificate = Certificate::select(
                  'certificates.id', 
                  'certificates.codigo_certificado', 
                  'certificates.ini_vigencia',
@@ -99,18 +101,18 @@ class CertificateController extends Controller
                  'certificates.fecha_emision')
                 ->where('certificates.id','=',$codigo)
                 ->get()->first();
-        $cert->ini_vigencia = date_format(date_create($order->ini_vigencia), 'Y-m-d');
-        $cert->fin_vigencia = date_format(date_create($order->fin_vigencia), 'Y-m-d');
-        $cert->ini_control = date_format(date_create($order->ini_control), 'Y-m-d');
-        $cert->fin_control = date_format(date_create($order->fin_control), 'Y-m-d');
-        $cert->fecha_emision=date_format(date_create($order->fecha_emision), 'Y-m-d');
+        $certificate->ini_vigencia = date_format(date_create($certificate->ini_vigencia), 'Y-m-d');
+        $certificate->fin_vigencia = date_format(date_create($certificate->fin_vigencia), 'Y-m-d');
+        $certificate->ini_control = date_format(date_create($certificate->ini_control), 'Y-m-d');
+        $certificate->fin_control = date_format(date_create($certificate->fin_control), 'Y-m-d');
+        $certificate->fecha_emision=date_format(date_create($certificate->fecha_emision), 'Y-m-d');
         $title = 'Consulta Certificado';
         $activo = FALSE;
-        return view('certificate.form',compact('cert','activo','title'));
+        return view('certificate.form',compact('certificate','activo','title'));
     }
 
     public function edit($codigo){
-        $cert = Certificate::select(
+        $certificate = Certificate::select(
             'certificates.id', 
             'certificates.codigo_certificado', 
             'certificates.ini_vigencia',
@@ -131,13 +133,13 @@ class CertificateController extends Controller
             'certificates.fecha_emision')
            ->where('certificates.id','=',$codigo)
            ->get()->first();
-        $cert->ini_vigencia = date_format(date_create($order->ini_vigencia), 'Y-m-d');
-        $cert->fin_vigencia = date_format(date_create($order->fin_vigencia), 'Y-m-d');
-        $cert->ini_control = date_format(date_create($order->ini_control), 'Y-m-d');
-        $cert->fin_control = date_format(date_create($order->fin_control), 'Y-m-d');
+        $certificate->ini_vigencia = date_format(date_create($certificate->ini_vigencia), 'Y-m-d');
+        $certificate->fin_vigencia = date_format(date_create($certificate->fin_vigencia), 'Y-m-d');
+        $certificate->ini_control = date_format(date_create($certificate->ini_control), 'Y-m-d');
+        $certificate->fin_control = date_format(date_create($certificate->fin_control), 'Y-m-d');
         $title = 'Actualizar Certificado';
         $activo = TRUE;
-        $datos_vista = compact('activo','title','cert');
+        $datos_vista = compact('activo','title','certificate');
         return view('certificate.form',$datos_vista);
     }
 
@@ -164,5 +166,33 @@ class CertificateController extends Controller
         $cert=Certificate::where('id','=',$codigo)->get()->first();
         $cert->update($data);
         return redirect()->route('certificates.edit',['codigo' =>$codigo]);
+    }
+
+    public function consulta($placa){
+        $certificate = Certificate::select(
+                 'certificates.id', 
+                 'certificates.codigo_certificado', 
+                 'certificates.ini_vigencia',
+                 'certificates.fin_vigencia',
+                 'certificates.ini_control', 
+                 'certificates.fin_control',
+                 'certificates.apellido_paterno',
+                 'certificates.apellido_materno',
+                 'certificates.nombre',
+                 'certificates.razon_social',
+                 'certificates.tipo_documento',
+                 'certificates.nro_documento', 
+                 'certificates.placa',
+                 'certificates.provincia',
+                 'certificates.categoria',
+                 'certificates.uso',
+                 'certificates.tipo_vehiculo',
+                 'certificates.fecha_emision')
+                ->where('certificates.placa','=',$placa)
+                ->get()->first();
+            return response()->json([
+                'success' => true,
+                'certificado' => $certificate,
+            ], 200);
     }
 }

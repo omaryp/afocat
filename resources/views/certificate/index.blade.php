@@ -32,7 +32,7 @@
                     <tr>
                         <td>{{ $cert->codigo_certificado }}</td>
                         @if($cert->tipo_documento == 'DNI')
-                            <td>{{ $cert->nombre }} {{ $cert->apellido_paterno }} {{ $cert->apellido_materno }}</td>
+                            <td> {{ $cert->apellido_paterno }} {{ $cert->apellido_materno }} {{ $cert->nombre }}</td>
                         @else
                             <td>{{ $cert->razon_social }}</td>
                         @endif
