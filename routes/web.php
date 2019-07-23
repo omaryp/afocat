@@ -12,9 +12,16 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login.form');
 })
 ->name('inicio');
+
+/*Route::get('/', function () {
+    return view('welcome');
+})
+->name('inicio');*/
+
+Route::post('/login','Auth\LoginController@login')->name('login');
 
 Route::get('/storage', 'FileController@index')->name('storage');
 Route::post('/load', 'FileController@load');

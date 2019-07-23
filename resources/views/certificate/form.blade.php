@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    <form  action="@if(empty($certificate)) {{ url("certificates") }} @else {{ route('certificates.update',['codigo'=>$certificate->id]) }} @endif" method="POST">
+    <form  action=" @if(empty($certificate)) {{ url('certificates') }} @else {{ route('certificates.update',['codigo'=>$certificate->id]) }} @endif" method="POST">
         @unless(empty($certificate)) 
             {{ method_field('PUT') }} 
         @endunless
