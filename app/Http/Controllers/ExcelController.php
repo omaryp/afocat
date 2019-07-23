@@ -15,10 +15,25 @@ class ExcelController extends Controller
         $id = $data['id'];
         $fileLoad = FileLoadController::getArchivo($id);
         $ruta = storage_path('app').'/'.$fileLoad->ubicacion;
-        if (File::exists($ruta)){
-            $this::cargarExcel($ruta);
-        }else {
-            $mensaje = "No existe el archivo";      
+        try {
+            if (File::exists($ruta)){
+                $this::cargarExcel($ruta);
+                FileLoadController::updateEstadoProceso($id);
+                return response()->json([
+                    'success' => true,
+                    'mensaje' => 'Se procesó el excel correctamente !!!',
+                ], 200);
+            }else {
+                return response()->json([
+                    'success' => false,
+                    'mensaje' => 'No existe el archivo de excel !!!',
+                ], 200);      
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'mensaje' => 'Error al procesar el archivo de excel !!!',
+            ], 200);
         }
     }
 

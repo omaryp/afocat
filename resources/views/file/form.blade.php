@@ -57,7 +57,7 @@
                                             <td>{{ $file->fecha_carga }}</td>
                                             <td>{{ $file->ubicacion }}</td>
                                             <td> 
-                                                <button type="button" codigo="{{ $file->id }}" class="eliminar btn btn-outline-secondary btn-sm"><i class="fas fa-fw fa-trash-alt"></i></button>
+                                                <button type="button" codigo="{{ $file->id }}" class="eliminar btn btn-outline-secondary btn-sm @if($file->estado != 0) d-none @endif"><i class="fas fa-fw fa-trash-alt"></i></button>
                                                 <button type="button" codigo="{{ $file->id }}" class="procesar btn btn-outline-secondary btn-sm @if($file->estado != 0) d-none @endif"><i class="fas fa-fw fa-play-circle"></i></button>
                                             </td>   
                                         </tr>
@@ -109,17 +109,8 @@
     }
 
     function procesar_rpta(rpta){
-        if(rpta.success){
-            alert("Se eliminó correctamente!!.");
-            window.location="{{ url('storage') }}";
-        }   
-        else{
-            alert(rpta.mensajes);
-        }
-    }
-
-    function procesar_carga (rpta){
-
+        alert(rpta.mensaje);
+        window.location="{{ url('storage') }}";
     }
 
 

@@ -37,12 +37,12 @@ class FileController extends Controller
             $fileLoad->delete();
             return response()->json([
                 'success' => true,
-                'archivo' => $fileLoad->ubicacion,
+                'archivo' => 'Se eliminó archivo correctamente !!!',
             ], 200);
         }else{
             return response()->json([
                 'success' => false,
-                'mensajes' => 'El archivo no existe',
+                'mensaje' => 'El archivo no existe !!!',
             ], 404);
         }
     }

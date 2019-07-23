@@ -7,7 +7,7 @@ function ajax_post(ruta,datos){
         url: ruta,
     })
     .done(function( rpta, textStatus, jqXHR ) {
-        procesar_carga(rpta);
+        procesar_rpta(rpta);
     })
     .fail(function( jqXHR, textStatus, errorThrown ) {
         rpta_srv = textStatus;

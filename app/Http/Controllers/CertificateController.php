@@ -175,24 +175,21 @@ class CertificateController extends Controller
                  'certificates.ini_vigencia',
                  'certificates.fin_vigencia',
                  'certificates.ini_control', 
-                 'certificates.fin_control',
-                 'certificates.apellido_paterno',
-                 'certificates.apellido_materno',
-                 'certificates.nombre',
-                 'certificates.razon_social',
-                 'certificates.tipo_documento',
-                 'certificates.nro_documento', 
-                 'certificates.placa',
-                 'certificates.provincia',
-                 'certificates.categoria',
-                 'certificates.uso',
-                 'certificates.tipo_vehiculo',
-                 'certificates.fecha_emision')
+                 'certificates.fin_control', 
+                 'certificates.placa')
                 ->where('certificates.placa','=',$placa)
                 ->get()->first();
-            return response()->json([
-                'success' => true,
-                'certificado' => $certificate,
-            ], 200);
+            if($certificate != null){
+                return response()->json([
+                    'success' => true,
+                    'certificado' => $certificate,
+                ], 200);
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'certificado' => $certificate,
+                    'mensaje' => 'El certificado no existe !!!',
+                ], 200);
+            }
     }
 }
