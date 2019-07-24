@@ -21,14 +21,14 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    //use RegistersUsers;
 
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    //protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -37,7 +37,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
 
     /**
@@ -49,18 +49,44 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'nombres' => ['required', 'string', 'max:50'],
+            'apellidos' => ['required', 'string', 'max:50'],
+            'username'  => ['required', 'string', 'max:10', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'ciudad' => ['required'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
+
+    public function index(){
+        $users = User::
+            select('users.id', 
+                    'users.nombres',
+                    'users.apellidos',
+                    'users.ciudad',
+                    'users.isAdmin', 
+                    'users.username'
+            )
+            ->orderBy('users.apellidos', 'asc')
+            ->paginate(10);
+        $title = 'Listado de Usuarios';  
+        return view('user.index',compact('users','title'));
+    }
+
+    public function new(){
+        $title = 'Nuevo Usuario';
+        $activo = TRUE;
+        $datos_vista = compact('activo','title');
+        return view('user.form',$datos_vista);
+    }
+
 
     /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
      * @return \App\User
-     */
+     *//*
     protected function create(array $data)
     {
         return User::create([
@@ -68,5 +94,5 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-    }
+    }*/
 }

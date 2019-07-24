@@ -10,7 +10,6 @@ class CertificateController extends Controller
     //
     public function __construct(){
         $this->middleware('auth');
-        $this->middleware('guest',['only'=>'consulta']);
     }
 
     public function index(){
@@ -27,7 +26,6 @@ class CertificateController extends Controller
                 ->orderBy('certificates.codigo_certificado', 'asc')
                 ->paginate(10);
         $title = 'Listado de Ventas de Certificados';  
-        //dd($certificates);
         return view('certificate.index',compact('certificates','title'));
     }
 
@@ -170,30 +168,5 @@ class CertificateController extends Controller
         $cert=Certificate::where('id','=',$codigo)->get()->first();
         $cert->update($data);
         return redirect()->route('certificates.edit',['codigo' =>$codigo]);
-    }
-
-    public function consulta($placa){
-        $certificate = Certificate::select(
-                 'certificates.id', 
-                 'certificates.codigo_certificado', 
-                 'certificates.ini_vigencia',
-                 'certificates.fin_vigencia',
-                 'certificates.ini_control', 
-                 'certificates.fin_control', 
-                 'certificates.placa')
-                ->where('certificates.placa','=',$placa)
-                ->get()->first();
-            if($certificate != null){
-                return response()->json([
-                    'success' => true,
-                    'certificado' => $certificate,
-                ], 200);
-            }else{
-                return response()->json([
-                    'success' => false,
-                    'certificado' => $certificate,
-                    'mensaje' => 'El certificado no existe !!!',
-                ], 200);
-            }
     }
 }

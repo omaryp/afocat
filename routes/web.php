@@ -17,6 +17,7 @@
     return view('login.form');
 })
 ->name('inicio');*/
+//incio de sesión
 Route::get('/', 'Auth\LoginController@showLogin')->middleware('guest');
 
 Route::get('/welcome', 'WelcomeController@index')->name('welcome');
@@ -52,4 +53,24 @@ Route::get('/certificates/editar/{codigo}','CertificateController@edit')
 Route::put('/certificates/{codigo}','CertificateController@update')
 ->name('certificates.update');
 
-Route::get('/consulta/{placa}',array('middleware' => 'cors', 'uses' => 'CertificateController@consulta'));
+//usuarios
+Route::get('/users','Auth\RegisterController@index')->name('users');
+
+Route::post('/users','Auth\RegisterController@store');
+
+Route::get('/users/nueva','Auth\RegisterController@new')
+->name('users.new');
+
+Route::get('/users/{codigo}','Auth\RegisterController@show')
+->where('codigo','[0-9]+')
+->name('users.show');
+
+Route::get('/users/editar/{codigo}','Auth\RegisterController@edit')
+->where('codigo','[0-9]+')
+->name('users.edit');
+
+Route::put('/users/{codigo}','Auth\RegisterController@update')
+->name('users.update');
+
+//ruta para consulta externa
+Route::get('/consulta/{placa}',array('middleware' => 'cors', 'uses' => 'ConsultaController@consulta'));

@@ -9,11 +9,16 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Archivos</h1>
     
-  </div>
+</div>
     
 @endsection
 
 @section('content')
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">{{ $title }}</h6>
+    </div>
+    <div class="card-body">
     <form method="POST" action="{{ url('load') }}" accept-charset="UTF-8" enctype="multipart/form-data">
         
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -82,6 +87,8 @@
             </div>
     </form>
     @include('includes.pagination', ['paginator' => $files])
+</div>
+</div>
 @endsection
 
 @section('script')
@@ -112,7 +119,6 @@
         alert(rpta.mensaje);
         window.location="{{ url('storage') }}";
     }
-
 
 </script>
 @endsection

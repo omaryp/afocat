@@ -18,9 +18,12 @@ use Faker\Generator as Faker;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'name' => 'Administrador',
+        'nombres' => 'José Tomas',
+        'apellidos' => 'Chávez Bermejo',
         'username' => 'admin',
         'email' => 'admin@email.com',
+        'isAdmin' => 1,
+        'ciudad' => 0,
         'email_verified_at' => now(),
         'password' => bcrypt('123456'), // password
         'remember_token' => Str::random(10),

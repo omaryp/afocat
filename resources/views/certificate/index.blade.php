@@ -1,9 +1,5 @@
 @extends('layout')
 
-@section('title_page')
-{{ $title }}
-@endsection
-
 @section('head_options')
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -14,7 +10,11 @@
 @endsection
 
 @section('content')
-    
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">{{ $title }}</h6>
+    </div>
+    <div class="card-body">
         <div class="table-responsive">
             <table class="table table-striped table-sm">
             <thead>
@@ -57,5 +57,7 @@
             </table>
         </div>
         @include('includes.pagination', ['paginator' => $certificates])
+    </div>
+</div>
 @endsection
 

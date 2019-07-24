@@ -59,46 +59,36 @@
         Mantenimiento
       </div>
 
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('users') }}" >
+          <i class="fas fa-fw fa-user"></i>
+          <span>Usuarios</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('certificates') }}" >
+          <i class="fas fa-fw fa-file-alt"></i>
+          <span>Certificados</span>
+        </a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <div class="sidebar-heading">
+        Carga
+      </div>
+
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link" href="{{ route('storage') }}" >
           <i class="fas fa-fw fa-file-upload"></i>
-          <span>Carga de Archivo</span>
+          <span>Carga de Archivos</span>
         </a>
         
       </li>
-
-      <li class="nav-item">
-          <a class="nav-link" href="{{ route('certificates') }}" >
-            <i class="fas fa-fw fa-file-alt"></i>
-            <span>Certificados</span>
-          </a>
-          
-        </li>
-
-
-
-     
-      <!-- Divider -->
       <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <!--<div class="sidebar-heading">
-        Reportes
-      </div>-->
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <!--<li class="nav-item">
-        <a class="nav-link " href="#">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Pages</span>
-        </a>
-      </li>-->
-
-      
-
-      <!-- Divider -->
-      <!--<hr class="sidebar-divider d-none d-md-block">-->
 
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">
@@ -137,27 +127,7 @@
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </li>
-
-
+         
             <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
@@ -178,32 +148,14 @@
             </li>
 
           </ul>
-
         </nav>
-        <!-- End of Topbar -->
-
-        <!-- Begin Page Content -->
         <div class="container-fluid">
-
           @yield('head_options')
-          <!-- Page Heading -->
-          <!--<h1 class="h3 mb-2 text-gray-800">Tables</h1>-->
-          <!--<p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>-->
-
-          <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">@yield('title_page')</h6>
-                </div>
-                <div class="card-body">
-                    @yield('content')
-                </div>
-            </div>
-        <!-- /.container-fluid -->
-
+                   
+          @yield('content')
+          <!-- /.container-fluid -->
         </div>
         <!-- End of Main Content -->
-
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
