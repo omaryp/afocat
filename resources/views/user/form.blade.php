@@ -26,7 +26,7 @@
             @endif
         
             <div class="row">
-                <div class="col-md-6 mb-3">
+                <div class="col-md-4 mb-3">
                     <label for="usuario" >Usuario</label>
                     <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" name = "usuario" id="usuario" placeholder="Example omanpe"
                             @unless(empty($user)) value="{{ $user->username }}" @else value="{{ old('usuario') }}" @endunless/>
@@ -62,7 +62,7 @@
                                 @endforeach
                             </select>
                         @else
-                            <input type="text" class="form-control form-control-sm " value="{{ $user->descor }}" />
+                            <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm " value="{{ $user->descor }}" />
                         @endunless
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                 <div class="col-md-6 mb-3">
                     <label for="cpassword">Confirmar Contraseña</label>
                     <div class="input-group">
-                        <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" id="cpassword" name ="cpassword" placeholder="Confirmar Contraseña" @unless(empty($user)) value="{{ $user->password }}" @else value="{{ old('cpassword') }}" @endunless/>
+                        <input type="password" @unless($activo) disabled @endunless class="form-control form-control-sm" id="cpassword" name ="cpassword" placeholder="Confirmar Contraseña" @unless(empty($user)) value="{{ $user->password }}" @else value="{{ old('cpassword') }}" @endunless/>
                     </div>
                 </div>
             </div>

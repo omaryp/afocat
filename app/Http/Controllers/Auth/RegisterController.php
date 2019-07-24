@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ParametroController;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -64,9 +65,12 @@ class RegisterController extends Controller
                     'users.nombres',
                     'users.apellidos',
                     'users.ciudad',
+                    'parametros.descor',
                     'users.isAdmin', 
-                    'users.username'
-            )
+                    'users.username')
+            ->join('parametros', 'parametros.codtab','=','users.ciudad')
+            ->where('parametros.codigo','=',1)
+            ->where('parametros.codtab','<>',"''")
             ->orderBy('users.apellidos', 'asc')
             ->paginate(10);
         $title = 'Listado de Usuarios';  
@@ -76,7 +80,48 @@ class RegisterController extends Controller
     public function new(){
         $title = 'Nuevo Usuario';
         $activo = TRUE;
-        $datos_vista = compact('activo','title');
+        $ciudades = ParametroController::getCiudades();
+        $datos_vista = compact('activo','title','ciudades');
+        return view('user.form',$datos_vista);
+    }
+
+    public function show($codigo){
+        $user = User::select(
+                 'users.id', 
+                 'users.nombres', 
+                 'users.apellidos',
+                 'users.username',
+                 'users.ciudad',
+                 'users.idAdmin',
+                 'parametros.descor', 
+                 'users.email',
+                 'users.password')
+                ->join('parametros', 'parametros.codtab','=','users.ciudad')
+                ->where('parametros.codigo','=',1)
+                ->where('parametros.codtab','<>',"''")
+                ->where('users.id','=',$codigo)
+                ->get()->first();
+        $title = 'Consulta Usuario';
+        $activo = FALSE;
+        return view('user.form',compact('user','activo','title'));
+    }
+
+    public function edit($codigo){
+        $user = User::select(
+            'users.id', 
+            'users.username', 
+            'users.nombres',
+            'users.apellidos',
+            'users.password', 
+            'users.ciudad',
+            'users.isAdmin',
+            'users.email')
+           ->where('users.id','=',$codigo)
+           ->get()->first();
+        $ciudades = ParametroController::getCiudades();
+        $title = 'Actualizar Usuario';
+        $activo = TRUE;
+        $datos_vista = compact('activo','title','user','ciudades');
         return view('user.form',$datos_vista);
     }
 

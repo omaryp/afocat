@@ -31,7 +31,7 @@
                     <tr>
                         <td>{{ $user->username}}</td>
                         <td>{{ $user->apellidos }}, {{ $user->nombres }}</td>
-                        <td>{{ $user->ciudad}}</td>
+                        <td>{{ $user->descor}}</td>
                         <td>{{ $user->isAdmin}}</td>
                         <td> 
                             <div class="btn-group mr-2">
