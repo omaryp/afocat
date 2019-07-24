@@ -10,8 +10,9 @@ class CertificateController extends Controller
     //
     public function __construct(){
         $this->middleware('auth');
+        $this->middleware('guest',['only'=>'consulta']);
     }
-    
+
     public function index(){
         $certificates = Certificate::
              select('certificates.id', 
