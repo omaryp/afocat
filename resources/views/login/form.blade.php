@@ -36,17 +36,20 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">AFOCAT - TRANS REGIÓN PIURA</h1>
                   </div>
+                    @if(session()->has('flash'))
+                      <div class="alert alert-danger">{{ session('flash') }}</div>
+                    @endif
                   <form class="user" method="POST" action="{{ route('login') }}">
                     {!! csrf_field() !!}
-                    <div class="form-group {{ $errors->has('username') ? 'border-danger':'' }}">
-                      <input type="text" class="form-control form-control-user" id="username" name="username" aria-describedby="emailHelp" placeholder="Ingrese Usuario ...">
-                      {!! $errors->first('username','<span class="help-block">:message</span>')!!}
+                    <div class="form-group {{ $errors->has('username') ? 'text-danger':'' }}">
+                      <input type="text" class="form-control" id="username" name="username" value="{{ old('username' )}}" aria-describedby="emailHelp" placeholder="Ingrese Usuario ...">
+                      {!! $errors->first('username','<div class="alert">:message</div>')!!}
                     </div>
-                    <div class="form-group {{ $errors->has('password') ? 'border-danger':'' }}">
-                      <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Ingrese Contraseña ...">
-                      {!! $errors->first('password','<span class="help-block">:message</span>')!!}
+                    <div class="form-group {{ $errors->has('password') ? 'text-danger':'' }}">
+                      <input type="password" class="form-control " id="password" name="password" placeholder="Ingrese Contraseña ...">
+                      {!! $errors->first('password','<div class="alert">:message</div>')!!}
                     </div>
-                    <input type="submit" value="Ingresar" class="btn btn-primary btn-user btn-block">
+                    <input type="submit" value="Ingresar" class="btn btn-primary btn-block">
                   </form>
                 </div>
               </div>

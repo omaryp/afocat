@@ -11,17 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('login.form');
-})
-->name('inicio');
+
 
 /*Route::get('/', function () {
-    return view('welcome');
+    return view('login.form');
 })
 ->name('inicio');*/
+Route::get('/', 'Auth\LoginController@showLogin')->middleware('guest');
+
+Route::get('/welcome', 'WelcomeController@index')->name('welcome');
 
 Route::post('/login','Auth\LoginController@login')->name('login');
+Route::post('/logout','Auth\LoginController@logout')->name('logout');
 
 Route::get('/storage', 'FileController@index')->name('storage');
 Route::post('/load', 'FileController@load');

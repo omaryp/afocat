@@ -33,7 +33,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('inicio') }}">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('welcome') }}">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fab fa-artstation" style="color:lightgreen"></i>
         </div>
@@ -45,7 +45,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('inicio') }}">
+        <a class="nav-link" href="{{ route('welcome') }}">
           
           <i class="fas fa-fw fa-home"></i>
           <span>Inicio</span></a>
@@ -163,7 +163,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-3 d-none d-lg-inline text-gray-800 "><i class="fas fa-user mr-3 fa-fw"></i>Bienvenido Valerie Luna</span>
+                <span class="mr-3 d-none d-lg-inline text-gray-800 "><i class="fas fa-user mr-3 fa-fw"></i>Bienvenid@ {{ auth()->user()->name }}</span>
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -230,15 +230,18 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Desea Salir?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-body">Seleccione salir si desea terminar la sesión actual.</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <form action="{{ route('logout') }}" method="post">
+            {{ csrf_field() }}
+            <button class="btn btn-primary">Salir</button>
+          </form>
         </div>
       </div>
     </div>

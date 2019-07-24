@@ -8,7 +8,10 @@ use App\Models\Certificate;
 class CertificateController extends Controller
 {
     //
-
+    public function __construct(){
+        $this->middleware('auth');
+    }
+    
     public function index(){
         $certificates = Certificate::
              select('certificates.id', 

@@ -9,6 +9,10 @@ use App\Imports\CertificateImport;
 
 class ExcelController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
+    
     //
     public function procesar(){
         $data= request()->all();
