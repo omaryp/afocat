@@ -86,8 +86,8 @@
             @if ($activo)
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group mr-2">
-                        <button type="submit" class="btn btn-sm btn-primary buser">Guardar</button>
-                        <a href="{{ route('users') }}" class="btn btn-sm btn-primary buser">Salir</a>
+                        <button type="submit" class="btn border btn-primary buser">Guardar</button>
+                        <a href="{{ route('users') }}" class="btn border btn-primary buser">Salir</a>
                     </div>
                 </div>    
             @endif
@@ -96,7 +96,7 @@
         @unless ($activo)
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
-                    <a href="{{ route('users') }}" class="btn btn-primary buser">Salir</a>
+                    <a href="{{ route('users') }}" class="btn border btn-primary buser">Salir</a>
                 </div>
             </div>    
         @endunless

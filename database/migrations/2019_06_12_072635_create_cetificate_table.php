@@ -27,7 +27,7 @@ class CreateCetificateTable extends Migration
             $table->string('nombre',200)->default('')->nullable();
             $table->string('razon_social',300)->default('')->nullable();
             $table->string('tipo_documento',5)->default('')->nullable();
-            $table->string('nro_documento',200)->default('')->nullable();
+            $table->string('nro_documento',11)->default('')->nullable();
             $table->string('placa',20)->default('')->nullable();
             $table->string('provincia',50)->default('')->nullable();
             $table->string('categoria',4)->nullable()->nullable();

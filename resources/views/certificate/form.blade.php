@@ -133,13 +133,22 @@
                     </div>
                 </div>           
             </div>
+
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label for="observaciones">Observaciones</label>
+                    <div class="input-group">
+                        <input type="text"  @unless($activo) disabled @endunless class="form-control form-control-sm" id="observaciones" name ="observaciones" placeholder="Observaciones" @unless(empty($certificate)) value="{{ $certificate->observaciones }}" @else value="{{ old('observaciones') }}" @endunless/>
+                    </div>
+                </div>
+            </div>
             
 
             @if ($activo)
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group mr-2">
-                        <button type="submit" class="btn btn-sm btn-primary bcertificate">Guardar</button>
-                        <a href="{{ route('certificates') }}" class="btn btn-sm btn-primary bcertificate">Salir</a>
+                        <button type="submit" class="btn border btn-primary bcertificate">Guardar</button>
+                        <a href="{{ route('certificates') }}" class="btn border btn-primary bcertificate">Salir</a>
                     </div>
                 </div>    
             @endif
@@ -148,7 +157,7 @@
         @unless ($activo)
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
-                    <a href="{{ route('certificates') }}" class="btn btn-primary bcertificate">Salir</a>
+                    <a href="{{ route('certificates') }}" class="btn border btn-primary bcertificate">Salir</a>
                 </div>
             </div>    
         @endunless

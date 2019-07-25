@@ -38,7 +38,7 @@ class CertificateController extends Controller
 
     public function store(){
         $data = request()->validate([
-            'codigo_certificado'=>'required|size:14|unique',
+            'codigo_certificado'=>'required|size:14|unique:certificates,codigo_certificado',
             'ini_vigencia'=>'required|date_format:Y-m-d',
             'fin_vigencia'=>'required|date_format:Y-m-d', 
             'ini_control'=>'required|date_format:Y-m-d',
@@ -55,6 +55,7 @@ class CertificateController extends Controller
             'uso' => 'required',
             'tipo_vehiculo' => 'required',
             'fecha_emision' => 'required|date_format:Y-m-d', 
+            'observaciones' => 'nullable',
         ]);
             
         $cert = new Certificate();
@@ -100,7 +101,8 @@ class CertificateController extends Controller
                  'certificates.categoria',
                  'certificates.uso',
                  'certificates.tipo_vehiculo',
-                 'certificates.fecha_emision')
+                 'certificates.fecha_emision',
+                 'certificates.observaciones')
                 ->where('certificates.id','=',$codigo)
                 ->get()->first();
         $certificate->ini_vigencia = date_format(date_create($certificate->ini_vigencia), 'Y-m-d');
@@ -132,7 +134,8 @@ class CertificateController extends Controller
             'certificates.categoria',
             'certificates.uso',
             'certificates.tipo_vehiculo',
-            'certificates.fecha_emision')
+            'certificates.fecha_emision',
+            'certificates.observaciones')
            ->where('certificates.id','=',$codigo)
            ->get()->first();
         $certificate->ini_vigencia = date_format(date_create($certificate->ini_vigencia), 'Y-m-d');
@@ -147,7 +150,7 @@ class CertificateController extends Controller
 
     public function update($codigo){
         $data = request()->validate([
-            'codigo_certificado'=>'required|size:14|unique',
+            'codigo_certificado'=>'string|required|size:14',
             'ini_vigencia'=>'required|date_format:Y-m-d',
             'fin_vigencia'=>'required|date_format:Y-m-d', 
             'ini_control'=>'required|date_format:Y-m-d',
@@ -157,13 +160,14 @@ class CertificateController extends Controller
             'nombre' => 'nullable',
             'razon_social' => 'nullable',
             'tipo_documento' => 'nullable',
-            'nro_documento' => 'required|numeric|between:8,11',
+            'nro_documento' => 'required|string|between:8,11',
             'placa' => 'required',
             'provincia' => 'required|string',
             'categoria' => 'required',
             'uso' => 'required',
             'tipo_vehiculo' => 'required',
-            'fecha_emision' => 'required|date_format:Y-m-d', 
+            'fecha_emision' => 'required|date_format:Y-m-d',
+            'observaciones' => 'nullable', 
         ]);   
         $cert=Certificate::where('id','=',$codigo)->get()->first();
         $cert->update($data);

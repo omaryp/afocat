@@ -92,7 +92,7 @@ class RegisterController extends Controller
                  'users.apellidos',
                  'users.username',
                  'users.ciudad',
-                 'users.idAdmin',
+                 'users.isAdmin',
                  'parametros.descor', 
                  'users.email',
                  'users.password')
