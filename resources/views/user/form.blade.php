@@ -27,9 +27,9 @@
         
             <div class="row">
                 <div class="col-md-4 mb-3">
-                    <label for="usuario" >Usuario</label>
-                    <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" name = "usuario" id="usuario" placeholder="Example omanpe"
-                            @unless(empty($user)) value="{{ $user->username }}" @else value="{{ old('usuario') }}" @endunless/>
+                    <label for="username" >Usuario</label>
+                    <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" name = "username" id="username" placeholder="Example omanpe"
+                            @unless(empty($user)) value="{{ $user->username }}" @else value="{{ old('username') }}" @endunless/>
                 </div>
             </div>
 

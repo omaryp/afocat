@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ParametroController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -50,12 +51,13 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'nombres' => ['required', 'string', 'max:50'],
-            'apellidos' => ['required', 'string', 'max:50'],
-            'username'  => ['required', 'string', 'max:10', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'ciudad' => ['required'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'nombres' => 'required|string|max:50',
+            'apellidos' => 'required|string|max:50',
+            'username'  => 'required|string|max:10|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'ciudad' => 'required',
+            'password' => 'required|string|min:8|same:cpassword',
+            'cpassword' => 'required|string|min:8',
         ]);
     }
 
@@ -123,6 +125,27 @@ class RegisterController extends Controller
         $activo = TRUE;
         $datos_vista = compact('activo','title','user','ciudades');
         return view('user.form',$datos_vista);
+    }
+
+    public function store(){
+        $data = request()->all();
+        $validator = $this::validator($data);
+        if ($validator->fails()) {
+            return redirect('/users/nueva')
+                        ->withErrors($validator)
+                        ->withInput();
+        }else{
+            $user = new User(); 
+            $user->username=$data['username'];
+            $user->nombres=$data['nombres'];
+            $user->apellidos=$data['apellidos'];
+            $user->password=bcrypt($data['password']);
+            $user->ciudad=$data['ciudad'];
+            $user->isAdmin=0;
+            $user->email=$data['email'];
+            $user->save();
+            return redirect()->route('users.edit',['codigo' => $user->id]);
+        }
     }
 
 
