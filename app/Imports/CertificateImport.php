@@ -20,7 +20,6 @@ class CertificateImport implements ToModel, WithBatchInserts, WithChunkReading, 
     public function model(array $row)
     {
         $codigo = explode('-',$row['codigo_certificado']);
-        //dd($row);
         return new Certificate([
             //
             'correlativo' => intval($codigo[1]),

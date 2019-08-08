@@ -61,6 +61,7 @@
                                             <td>{{ $file->fecha_carga }}</td>
                                             <td>{{ $file->ubicacion }}</td>
                                             <td> 
+                                                <span id="load" ></span>
                                                 <button type="button" codigo="{{ $file->id }}" class="eliminar btn btn-outline-secondary btn-sm @if($file->estado != 0) d-none @endif"><i class="fas fa-fw fa-trash-alt"></i></button>
                                                 <button type="button" codigo="{{ $file->id }}" class="procesar btn btn-outline-secondary btn-sm @if($file->estado != 0) d-none @endif"><i class="fas fa-fw fa-play-circle"></i></button>
                                             </td>   
@@ -101,6 +102,7 @@
         });
 
         $( "tbody").on("click", "button.procesar",function(){
+            $("tbody span #load").html('<img src="{{ asset('images/load.gif') }}"/>');
             procesarArchivo($(this).attr('codigo'));
         });
 
