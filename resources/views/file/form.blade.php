@@ -61,7 +61,7 @@
                                             <td>{{ $file->fecha_carga }}</td>
                                             <td>{{ $file->ubicacion }}</td>
                                             <td> 
-                                                <span id="load" ></span>
+                                                <div class="load btn" ></div>
                                                 <button type="button" codigo="{{ $file->id }}" class="eliminar btn btn-outline-secondary btn-sm @if($file->estado != 0) d-none @endif"><i class="fas fa-fw fa-trash-alt"></i></button>
                                                 <button type="button" codigo="{{ $file->id }}" class="procesar btn btn-outline-secondary btn-sm @if($file->estado != 0) d-none @endif"><i class="fas fa-fw fa-play-circle"></i></button>
                                             </td>   
@@ -89,6 +89,32 @@
     @include('includes.pagination', ['paginator' => $files])
 </div>
 </div>
+
+
+
+<div class="modal fade" id="erroresExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Validación Excel</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <div id ="errores">
+                
+            </div>
+                        
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('script')
@@ -102,7 +128,7 @@
         });
 
         $( "tbody").on("click", "button.procesar",function(){
-            $("tbody span #load").html('<img src="{{ asset('images/load.gif') }}"/>');
+            $("tbody div.load").html('<img src="{{ asset('images/load.gif') }}"/>');
             procesarArchivo($(this).attr('codigo'));
         });
 
@@ -117,8 +143,21 @@
     }
 
     function procesar_rpta(rpta){
-        alert(rpta.mensaje);
-        window.location="{{ url('storage') }}";
+        $("tbody div.load").empty();
+        switch (rpta.codigo) {
+            case -1:
+                $('#errores').empty();
+                $('#errores').html(rpta.errores);
+                $('#erroresExcel').modal('show');
+                break;
+            default :
+                alert(rpta.mensaje);
+                break;
+        }
+        if( == -1){
+            
+        }
+        //window.location="{{ url('storage') }}";
     }
 
 </script>

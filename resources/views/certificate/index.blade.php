@@ -31,11 +31,7 @@
                     @forelse ($certificates as $cert)
                     <tr>
                         <td>{{ $cert->codigo_certificado }}</td>
-                        @if($cert->tipo_documento == 'DNI')
-                            <td> {{ $cert->apellido_paterno }} {{ $cert->apellido_materno }} {{ $cert->nombre }}</td>
-                        @else
-                            <td>{{ $cert->razon_social }}</td>
-                        @endif
+                        <td>{{ $cert->razon_social }}</td>
                         <td>{{ $cert->placa }}</td>
                         <td>{{ $cert->ini_vigencia}}</td>
                         <td>{{ $cert->fin_vigencia}}</td>

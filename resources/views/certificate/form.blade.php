@@ -55,31 +55,10 @@
                     <input type="date" @unless($activo) disabled @endunless class="form-control form-control-sm" id="fin_control" name ="fin_control" placeholder="dd/mm/aaaa" @unless(empty($certificate)) value="{{ $certificate->fin_control }}" @else value="{{ old('fin_control') }}" @endunless/>
                 </div>
             </div>
-        
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label for="apellido_paterno">Apellido Paterno del Asociado</label>
-                    <div class="input-group">
-                        <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" id="apellido_paterno" name ="apellido_paterno" placeholder="Apellido Paterno" @unless(empty($certificate)) value="{{ $certificate->apellido_paterno }}" @else value="{{ old('apellido_paterno') }}" @endunless/>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="apellido_materno">Apellido Materno del Asociado</label>
-                    <div class="input-group">
-                        <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" id="apellido_materno" name ="apellido_materno" placeholder="Apellido Materno" @unless(empty($certificate)) value="{{ $certificate->apellido_materno }}" @else value="{{ old('apellido_materno') }}" @endunless/>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="nombre">Nombre</label>
-                    <div class="input-group">
-                        <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" id="nombre" name ="nombre" placeholder="Nombres" @unless(empty($certificate)) value="{{ $certificate->nombre }}" @else value="{{ old('nombre') }}" @endunless/>
-                    </div>
-                </div>
-            </div>
 
             <div class="row">
                 <div class="col-md-12 mb-3">
-                    <label for="razon_social">Razón Social</label>
+                    <label for="razon_social">Razón Social ó Apellidos y Nombres del Asociado</label>
                     <div class="input-group">
                         <input type="text"  @unless($activo) disabled @endunless class="form-control form-control-sm" id="razon_social" name ="razon_social" placeholder="Razón Social" @unless(empty($certificate)) value="{{ $certificate->razon_social }}" @else value="{{ old('razon_social') }}" @endunless/>
                     </div>

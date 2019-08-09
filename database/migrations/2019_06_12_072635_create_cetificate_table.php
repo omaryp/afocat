@@ -22,9 +22,6 @@ class CreateCetificateTable extends Migration
             $table->date('fin_vigencia')->nullable();
             $table->date('ini_control')->nullable();
             $table->date('fin_control')->nullable();
-            $table->string('apellido_paterno',100)->default('')->nullable();
-            $table->string('apellido_materno',100)->default('')->nullable();
-            $table->string('nombre',200)->default('')->nullable();
             $table->string('razon_social',300)->default('')->nullable();
             $table->string('tipo_documento',5)->default('')->nullable();
             $table->string('nro_documento',11)->default('')->nullable();

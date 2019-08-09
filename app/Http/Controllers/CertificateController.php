@@ -18,10 +18,8 @@ class CertificateController extends Controller
                     'certificates.codigo_certificado',
                     'certificates.ini_vigencia',
                     'certificates.fin_vigencia',
-                    'certificates.apellido_paterno', 
-                    'certificates.apellido_materno',
+                    'certificates.razon_social',
                     'certificates.tipo_documento',
-                    'certificates.nombre',
                     'certificates.placa')
                 ->orderBy('certificates.codigo_certificado', 'asc')
                 ->paginate(10);
@@ -43,11 +41,8 @@ class CertificateController extends Controller
             'fin_vigencia'=>'required|date_format:Y-m-d', 
             'ini_control'=>'required|date_format:Y-m-d',
             'fin_control' => 'required|date_format:Y-m-d',
-            'apellido_paterno' => 'nullable',
-            'apellido_materno' => 'nullable',
-            'nombre' => 'nullable',
-            'razon_social' => 'nullable',
-            'tipo_documento' => 'nullable',
+            'razon_social' => 'required',
+            'tipo_documento' => 'required',
             'nro_documento' => 'required|numeric|between:8,11',
             'placa' => 'required',
             'provincia' => 'required|string',
@@ -67,9 +62,7 @@ class CertificateController extends Controller
         $cert->fin_vigencia=date_format(date_create($data['fin_vigencia']), 'Y-m-d H:i:s');
         $cert->ini_control=date_format(date_create($data['ini_control']), 'Y-m-d H:i:s');
         $cert->fin_control=date_format(date_create($data['fin_control']), 'Y-m-d H:i:s');
-        $cert->apellido_paterno=$data['apellido_paterno'];
-        $cert->apellido_materno=$data['apellido_materno'];
-        $cert->nombre=$data['nombre'];
+        $cert->razon_social=$data['razon_social'];
         $cert->tipo_documento=$data['tipo_documento'];
         $cert->nro_documento=$data['nro_documento'];
         $cert->placa=$data['placa'];
@@ -90,9 +83,6 @@ class CertificateController extends Controller
                  'certificates.fin_vigencia',
                  'certificates.ini_control', 
                  'certificates.fin_control',
-                 'certificates.apellido_paterno',
-                 'certificates.apellido_materno',
-                 'certificates.nombre',
                  'certificates.razon_social',
                  'certificates.tipo_documento',
                  'certificates.nro_documento', 
@@ -123,9 +113,6 @@ class CertificateController extends Controller
             'certificates.fin_vigencia',
             'certificates.ini_control', 
             'certificates.fin_control',
-            'certificates.apellido_paterno',
-            'certificates.apellido_materno',
-            'certificates.nombre',
             'certificates.razon_social',
             'certificates.tipo_documento',
             'certificates.nro_documento', 
@@ -155,10 +142,7 @@ class CertificateController extends Controller
             'fin_vigencia'=>'required|date_format:Y-m-d', 
             'ini_control'=>'required|date_format:Y-m-d',
             'fin_control' => 'required|date_format:Y-m-d',
-            'apellido_paterno' => 'nullable',
-            'apellido_materno' => 'nullable',
-            'nombre' => 'nullable',
-            'razon_social' => 'nullable',
+            'razon_social' => 'required',
             'tipo_documento' => 'nullable',
             'nro_documento' => 'required|string|between:8,11',
             'placa' => 'required',
