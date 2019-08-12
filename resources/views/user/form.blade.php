@@ -58,7 +58,7 @@
                             <select name="ciudad" id="ciudad" class="form-control form-control-sm" >
                                 <option value="0">Seleccionar Ciudad</option>
                                 @foreach ($ciudades as $des)
-                                    <option value="{{ $des->codtab }}" @unless(empty($user)) @if($user->destino == $des->codtab ) selected @endif @else @if(old('ciudad') == $des->codtab ) selected @endif @endif >{{ $des->descor }}</option>    
+                                    <option value="{{ $des->codtab }}" @unless(empty($user)) @if($user->ciudad == $des->codtab ) selected @endif @else @if(old('ciudad') == $des->codtab ) selected @endif @endif >{{ $des->descor }}</option>    
                                 @endforeach
                             </select>
                         @else

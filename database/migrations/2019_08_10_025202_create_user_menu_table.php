@@ -15,8 +15,7 @@ class CreateUserMenuTable extends Migration
     {
         Schema::create('user_menu', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('username',20);
-            $table->unsignedDecimal('codigo',10,0);
+            $table->string('username',20);  
             $table->timestamps();
         });
     }

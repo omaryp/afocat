@@ -127,6 +127,20 @@ class RegisterController extends Controller
         return view('user.form',$datos_vista);
     }
 
+    public function update($codigo){
+        $data = request()->validate([
+            'nombres' => 'required|string|max:50',
+            'apellidos' => 'required|string|max:50',
+            'username'  => 'required|string|max:10',
+            'email' => 'required|string|email|max:255',
+            'ciudad' => 'required',
+            'password' => 'required|string|min:8|same:cpassword',
+            'cpassword' => 'required|string|min:8',
+        ]);   
+        $user=User::where('id','=',$codigo)->get()->first();
+        return redirect()->route('users.edit',['codigo' =>$codigo]);
+    }
+
     public function store(){
         $data = request()->all();
         $validator = $this::validator($data);

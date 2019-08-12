@@ -15,6 +15,7 @@ class CreateMenuTable extends Migration
     {
         Schema::create('menu', function (Blueprint $table) {
             $table->unsignedDecimal('codigo',10,0)->unique();
+            $table->primary('codigo');
             $table->string('descripcion',50)->nullable();
             $table->string('ruta',150)->nullable();
             $table->unsignedDecimal('tipo',1,0)->nullable();
