@@ -12,6 +12,7 @@ class ConsultaController extends Controller
         $certificate = Certificate::select(
                  'certificates.id', 
                  'certificates.codigo_certificado', 
+                 'certificates.razon_social',
                  'certificates.ini_vigencia',
                  'certificates.fin_vigencia',
                  'certificates.ini_control', 
