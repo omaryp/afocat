@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMenuTable extends Migration
+class CreateOptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateMenuTable extends Migration
      */
     public function up()
     {
-        Schema::create('menu', function (Blueprint $table) {
+        Schema::create('options', function (Blueprint $table) {
             $table->unsignedDecimal('codigo',10,0)->unique();
             $table->primary('codigo');
             $table->string('descripcion',50)->nullable();
@@ -21,6 +21,7 @@ class CreateMenuTable extends Migration
             $table->unsignedDecimal('tipo',1,0)->nullable();
             $table->unsignedDecimal('parent',10,0)->nullable();
             $table->unsignedDecimal('orden',5,0)->nullable();
+            $table->string('icono',50)->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ class CreateMenuTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menu');
+        Schema::dropIfExists('options');
     }
 }

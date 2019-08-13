@@ -24,13 +24,15 @@ class CertificateController extends Controller
                 ->orderBy('certificates.codigo_certificado', 'asc')
                 ->paginate(10);
         $title = 'Listado de Ventas de Certificados';  
-        return view('certificate.index',compact('certificates','title'));
+        $opciones = MenuController::getMenu(auth()->user()->id);
+        return view('certificate.index',compact('certificates','title','opciones'));
     }
 
     public function create(){
         $title = 'Nueva Venta de Certificado';
         $activo = TRUE;
-        $datos_vista = compact('activo','title');
+        $opciones = MenuController::getMenu(auth()->user()->id);
+        $datos_vista = compact('activo','title','opciones');
         return view('certificate.form',$datos_vista);
     }
 
@@ -102,7 +104,8 @@ class CertificateController extends Controller
         $certificate->fecha_emision=date_format(date_create($certificate->fecha_emision), 'Y-m-d');
         $title = 'Consulta Certificado';
         $activo = FALSE;
-        return view('certificate.form',compact('certificate','activo','title'));
+        $opciones = MenuController::getMenu(auth()->user()->id);
+        return view('certificate.form',compact('certificate','activo','title','opciones'));
     }
 
     public function edit($codigo){
@@ -131,7 +134,8 @@ class CertificateController extends Controller
         $certificate->fin_control = date_format(date_create($certificate->fin_control), 'Y-m-d');
         $title = 'Actualizar Certificado';
         $activo = TRUE;
-        $datos_vista = compact('activo','title','certificate');
+        $opciones = MenuController::getMenu(auth()->user()->id);
+        $datos_vista = compact('activo','title','certificate','opciones');
         return view('certificate.form',$datos_vista);
     }
 

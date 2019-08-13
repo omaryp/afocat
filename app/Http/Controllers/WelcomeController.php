@@ -12,6 +12,10 @@ class WelcomeController extends Controller
 
     //
     public function index(){
-        return view('welcome');
+        $opciones = MenuController::getMenu(auth()->user()->id);
+        $datos_vista = compact('opciones');
+        return view('welcome',$datos_vista);
     }
+
+    
 }

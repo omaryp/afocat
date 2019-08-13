@@ -39,55 +39,28 @@
         </div>
         <div class="sidebar-brand-text mx-6">AFOCAT TRANS REGIÓN PIURA</div>
       </a>
+     
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
+      @foreach ($opciones as $option)
+        @if ($option->tipo == 0)
+          <hr class="sidebar-divider">
+          <!-- Heading -->
+          <div class="sidebar-heading">
+            {{$option->descripcion}}
+          </div>
+        @else
+          <li class="nav-item">
+            <a class="nav-link" href="{{ $option->ruta }}" >
+              <i class="fas fa-fw {{$option->icono}}"></i>
+              <span>{{$option->descripcion}}</span>
+            </a>
+          </li>  
+        @endif
+      @endforeach
 
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('welcome') }}">
-          
-          <i class="fas fa-fw fa-home"></i>
-          <span>Inicio</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Mantenimiento
-      </div>
-
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('users') }}" >
-          <i class="fas fa-fw fa-user"></i>
-          <span>Usuarios</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('certificates') }}" >
-          <i class="fas fa-fw fa-file-alt"></i>
-          <span>Certificados</span>
-        </a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <div class="sidebar-heading">
-        Carga
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('storage') }}" >
-          <i class="fas fa-fw fa-file-upload"></i>
-          <span>Carga de Archivos</span>
-        </a>
-        
-      </li>
+      
       <hr class="sidebar-divider">
 
       <!-- Sidebar Toggler (Sidebar) -->

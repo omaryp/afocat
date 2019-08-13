@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\MenuController; 
 use App\Http\Controllers\ParametroController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -76,14 +77,16 @@ class RegisterController extends Controller
             ->orderBy('users.apellidos', 'asc')
             ->paginate(10);
         $title = 'Listado de Usuarios';  
-        return view('user.index',compact('users','title'));
+        $opciones = MenuController::getMenu(auth()->user()->id);
+        return view('user.index',compact('users','title','opciones'));
     }
 
     public function new(){
         $title = 'Nuevo Usuario';
         $activo = TRUE;
         $ciudades = ParametroController::getCiudades();
-        $datos_vista = compact('activo','title','ciudades');
+        $opciones = MenuController::getMenu(auth()->user()->id);
+        $datos_vista = compact('activo','title','ciudades','opciones');
         return view('user.form',$datos_vista);
     }
 
@@ -104,8 +107,9 @@ class RegisterController extends Controller
                 ->where('users.id','=',$codigo)
                 ->get()->first();
         $title = 'Consulta Usuario';
+        $opciones = MenuController::getMenu(auth()->user()->id);
         $activo = FALSE;
-        return view('user.form',compact('user','activo','title'));
+        return view('user.form',compact('user','activo','title','opciones'));
     }
 
     public function edit($codigo){
@@ -121,9 +125,10 @@ class RegisterController extends Controller
            ->where('users.id','=',$codigo)
            ->get()->first();
         $ciudades = ParametroController::getCiudades();
+        $opciones = MenuController::getMenu(auth()->user()->id);
         $title = 'Actualizar Usuario';
         $activo = TRUE;
-        $datos_vista = compact('activo','title','user','ciudades');
+        $datos_vista = compact('activo','title','user','ciudades','opciones');
         return view('user.form',$datos_vista);
     }
 

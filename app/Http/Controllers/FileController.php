@@ -14,7 +14,8 @@ class FileController extends Controller
     public function index(){
         $title = 'Carga de Archivos';
         $files = FileLoadController::listarArchivos();
-        return view('file.form',compact('title','files'));
+        $opciones = MenuController::getMenu(auth()->user()->id);
+        return view('file.form',compact('title','files','opciones'));
     }
 
     public function load(Request $request){
@@ -30,7 +31,8 @@ class FileController extends Controller
         $files = FileLoadController::listarArchivos();
         $title = 'Carga de Archivos';
         $mensaje = 'Archivo cargado corectamente';
-        return view('file.form',compact('title','mensaje','files'));
+        $opciones = MenuController::getMenu(auth()->user()->id);
+        return view('file.form',compact('title','mensaje','files','opciones'));
     }
 
     public function destroy($id){
