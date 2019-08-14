@@ -86,7 +86,8 @@ class RegisterController extends Controller
         $activo = TRUE;
         $ciudades = ParametroController::getCiudades();
         $opciones = MenuController::getMenu(auth()->user()->id);
-        $datos_vista = compact('activo','title','ciudades','opciones');
+        $opciones_guardar = MenuController::getOpciones();
+        $datos_vista = compact('activo','title','ciudades','opciones','opciones_guardar');
         return view('user.form',$datos_vista);
     }
 

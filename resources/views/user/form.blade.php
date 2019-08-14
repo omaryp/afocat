@@ -5,7 +5,7 @@
 
 @section('head_options')
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Datos Certificado</h1>
+    <h1 class="h3 mb-0 text-gray-800">Datos Usuarios</h1>
   </div>
 @endsection
 
@@ -82,7 +82,21 @@
                     </div>
                 </div>
             </div>
-        
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="">Marcar Opciones</label>
+                </div>
+            </div>
+
+            @foreach ($opciones_guardar as $opc)
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <input type="checkbox" name="menu" id="{{ $opc->codigo }}" value="{{ $opc->descripcion }}"/>
+                    </div>
+                </div>
+            @endforeach
+                    
             @if ($activo)
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group mr-2">

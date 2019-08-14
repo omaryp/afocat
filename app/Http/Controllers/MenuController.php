@@ -28,6 +28,14 @@ class MenuController extends Controller
         return $opciones;
     }
 
+    public static function getOpciones(){
+        $opciones = Option::
+            select('options.codigo', 
+                    'options.descripcion')
+            ->orderBy('options.orden', 'asc')->get();
+        return $opciones;
+    }
+
     public static function cargarRutas($opciones){
         foreach ($opciones as $key => $opcion) {
             $opcion->ruta =  url($opcion->ruta);

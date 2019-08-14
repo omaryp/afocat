@@ -151,9 +151,9 @@
                 break;
             default :
                 alert(rpta.mensaje);
+                window.location="{{ url('storage') }}";
                 break;
         }
-        //window.location="{{ url('storage') }}";
     }
 
 </script>

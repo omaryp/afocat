@@ -10,8 +10,8 @@ class FileLoadController extends Controller
     //
     public static function listarArchivos(){  
         $files = 
-        FileLoad::select('file_loads.id','file_loads.nombre',
-                                'file_loads.fecha_carga','file_loads.ubicacion','file_loads.estado')
+        FileLoad::select('file_loads.id','file_loads.nombre','file_loads.fecha_carga',
+                         'file_loads.ubicacion','file_loads.estado')
                 ->orderBy('file_loads.created_at', 'desc')
                 ->paginate(10);
         return $files;

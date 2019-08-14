@@ -42,7 +42,7 @@ class FileController extends Controller
             $fileLoad->delete();
             return response()->json([
                 'success' => true,
-                'archivo' => 'Se eliminó archivo correctamente !!!',
+                'mensaje' => 'Se eliminó archivo correctamente !!!',
             ], 200);
         }else{
             return response()->json([
