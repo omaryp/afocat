@@ -28,10 +28,13 @@ class MenuController extends Controller
         return $opciones;
     }
 
-    public static function getOpciones(){
+    public static function getOpciones($usuariocodigo){
         $opciones = Option::
             select('options.codigo', 
-                    'options.descripcion')
+                    'options.descripcion',
+                    'menus.activo')
+            ->leftjoin('menus','options.codigo','=','menus.menu_id')
+            ->where('menus.users_id','=',$usuariocodigo)
             ->orderBy('options.orden', 'asc')->get();
         return $opciones;
     }

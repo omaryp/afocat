@@ -85,17 +85,25 @@
 
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="">Marcar Opciones</label>
+                    <label for="">Opciones</label>
                 </div>
             </div>
-
-            @foreach ($opciones_guardar as $opc)
-                <div class="row">
+            <div class="row">
+                @foreach ($opciones_guardar as $opc)
                     <div class="col-md-4 mb-3">
-                        <input type="checkbox" name="menu" id="{{ $opc->codigo }}" value="{{ $opc->descripcion }}"/>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" @if($opc->activo == 1 ) checked @endif value="{{ $opc->codigo }}" id="{{ $opc->codigo }}">
+                            <label class="form-check-label" for="defaultCheck1">
+                                    {{ $opc->descripcion }}
+                            </label>
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                    @if ($opc->codigo % 3 == 0)
+                        </div>
+                        <div class="row">
+                    @endif                    
+                @endforeach
+            </div>
                     
             @if ($activo)
                 <div class="btn-toolbar mb-2 mb-md-0">

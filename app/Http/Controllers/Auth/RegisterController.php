@@ -86,7 +86,7 @@ class RegisterController extends Controller
         $activo = TRUE;
         $ciudades = ParametroController::getCiudades();
         $opciones = MenuController::getMenu(auth()->user()->id);
-        $opciones_guardar = MenuController::getOpciones();
+        $opciones_guardar = MenuController::getOpciones(auth()->user()->id);
         $datos_vista = compact('activo','title','ciudades','opciones','opciones_guardar');
         return view('user.form',$datos_vista);
     }
@@ -127,9 +127,10 @@ class RegisterController extends Controller
            ->get()->first();
         $ciudades = ParametroController::getCiudades();
         $opciones = MenuController::getMenu(auth()->user()->id);
+        $opciones_guardar = MenuController::getOpciones(auth()->user()->id);
         $title = 'Actualizar Usuario';
         $activo = TRUE;
-        $datos_vista = compact('activo','title','user','ciudades','opciones');
+        $datos_vista = compact('activo','title','user','ciudades','opciones','opciones_guardar');
         return view('user.form',$datos_vista);
     }
 
