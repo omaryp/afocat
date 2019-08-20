@@ -86,7 +86,7 @@ class RegisterController extends Controller
         $activo = TRUE;
         $ciudades = ParametroController::getCiudades();
         $opciones = MenuController::getMenu(auth()->user()->id);
-        $opciones_guardar = MenuController::getOpciones(auth()->user()->id);
+        $opciones_guardar = $opciones;
         $datos_vista = compact('activo','title','ciudades','opciones','opciones_guardar');
         return view('user.form',$datos_vista);
     }
@@ -109,8 +109,9 @@ class RegisterController extends Controller
                 ->get()->first();
         $title = 'Consulta Usuario';
         $opciones = MenuController::getMenu(auth()->user()->id);
+        $opciones_guardar = MenuController::getOpciones(auth()->user()->id);
         $activo = FALSE;
-        return view('user.form',compact('user','activo','title','opciones'));
+        return view('user.form',compact('user','activo','title','opciones','opciones_guardar'));
     }
 
     public function edit($codigo){
@@ -145,28 +146,32 @@ class RegisterController extends Controller
             'cpassword' => 'required|string|min:8',
         ]);   
         $user=User::where('id','=',$codigo)->get()->first();
+        $user->update($data);
         return redirect()->route('users.edit',['codigo' =>$codigo]);
     }
 
     public function store(){
-        $data = request()->all();
-        $validator = $this::validator($data);
-        if ($validator->fails()) {
-            return redirect('/users/nueva')
-                        ->withErrors($validator)
-                        ->withInput();
-        }else{
-            $user = new User(); 
-            $user->username=$data['username'];
-            $user->nombres=$data['nombres'];
-            $user->apellidos=$data['apellidos'];
-            $user->password=bcrypt($data['password']);
-            $user->ciudad=$data['ciudad'];
-            $user->isAdmin=0;
-            $user->email=$data['email'];
-            $user->save();
-            return redirect()->route('users.edit',['codigo' => $user->id]);
-        }
+        $data = request()->validate([
+            'nombres' => 'required|string|max:50',
+            'apellidos' => 'required|string|max:50',
+            'username'  => 'required|string|max:10',
+            'email' => 'required|string|email|max:255',
+            'ciudad' => 'required',
+            'password' => 'required|string|min:8|same:cpassword',
+            'cpassword' => 'required|string|min:8',
+            'opciones' => '',
+        ]); 
+        $user = new User(); 
+        $user->username=$data['username'];
+        $user->nombres=$data['nombres'];
+        $user->apellidos=$data['apellidos'];
+        $user->password=bcrypt($data['password']);
+        $user->ciudad=$data['ciudad'];
+        $user->isAdmin=0;
+        $user->email=$data['email'];
+        $user->save();
+        MenuController::guardarOpciones($user->id,$user->username,$data['opciones']);
+        return redirect()->route('users.edit',['codigo' => $user->id]);
     }
 
 

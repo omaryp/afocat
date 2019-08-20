@@ -46,4 +46,15 @@ class MenuController extends Controller
         return $opciones;
     }
 
+    public static function guardarOpciones($codigoUsuario,$username,$opciones){
+        foreach ($opciones as $key => $value) {
+            $menu = new Menu();
+            $menu->menu_id=$value;
+            $menu->users_id=$codigoUsuario;
+            $menu->username=$username;
+            $menu->activo=1;
+            $menu->save();
+        }
+    }
+
 }

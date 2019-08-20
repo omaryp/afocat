@@ -92,7 +92,7 @@
                 @foreach ($opciones_guardar as $opc)
                     <div class="col-md-4 mb-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" @if($opc->activo == 1 ) checked @endif value="{{ $opc->codigo }}" id="{{ $opc->codigo }}">
+                            <input class="form-check-input" name ="opciones[]" type="checkbox" @if($opc->activo == 1 ) checked @endif value="{{ $opc->codigo }}" id="{{ $opc->codigo }}">
                             <label class="form-check-label" for="defaultCheck1">
                                     {{ $opc->descripcion }}
                             </label>
