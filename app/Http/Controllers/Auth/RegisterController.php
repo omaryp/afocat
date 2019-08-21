@@ -43,25 +43,6 @@ class RegisterController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'nombres' => 'required|string|max:50',
-            'apellidos' => 'required|string|max:50',
-            'username'  => 'required|string|max:10|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
-            'ciudad' => 'required',
-            'password' => 'required|string|min:8|same:cpassword',
-            'cpassword' => 'required|string|min:8',
-        ]);
-    }
-
     public function index(){
         $users = User::
             select('users.id', 
@@ -146,6 +127,7 @@ class RegisterController extends Controller
             'cpassword' => 'required|string|min:8',
         ]);   
         $user=User::where('id','=',$codigo)->get()->first();
+        $data['password'] = bcrypt($data['password']);
         $user->update($data);
         return redirect()->route('users.edit',['codigo' =>$codigo]);
     }
