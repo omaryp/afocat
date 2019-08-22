@@ -54,10 +54,9 @@ class CertificateController extends Controller
             'fecha_emision' => 'required|date_format:Y-m-d', 
             'observaciones' => 'nullable',
         ]);
-            
         $cert = new Certificate();
         $clave = explode("-",$data['codigo_certificado']);
-        $cert->numero=$clave[1];
+        $cert->correlativo=$clave[1];
         $cert->anio=$clave[2];
         $cert->codigo_certificado = $data['codigo_certificado'];
         $cert->ini_vigencia=date_format(date_create($data['ini_vigencia']), 'Y-m-d H:i:s');
@@ -74,7 +73,7 @@ class CertificateController extends Controller
         $cert->tipo_vehiculo=$data['tipo_vehiculo'];
         $cert->fecha_emision=$data['fecha_emision'];
         $cert->save();
-        return redirect()->route('certificate.edit',['codigo' => $cert->id]);
+        return redirect()->route('certificates.edit',['codigo' => $cert->id]);
     }
 
     public function show($codigo){
