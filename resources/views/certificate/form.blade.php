@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="codigo_certificado" >Número de CAT</label>
-                    <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" name = "codigo_certificado" id="codigo_certificado" placeholder="Example YF-001234-2018"
+                    <input type="text" @unless($activo) disabled @endunless class="form-control form-control-sm" name = "codigo_certificado" id="codigo_certificado" placeholder="Example 001234-2019"
                             @unless(empty($certificate)) value="{{ $certificate->codigo_certificado }}" @else value="{{ old('codigo_certificado') }}" @endunless/>
                 </div>
                 <div class="col-md-3 mb-3">

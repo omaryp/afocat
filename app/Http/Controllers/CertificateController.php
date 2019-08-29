@@ -38,7 +38,7 @@ class CertificateController extends Controller
 
     public function store(){
         $data = request()->validate([
-            'codigo_certificado'=>'required|size:14|unique:certificates,codigo_certificado',
+            'codigo_certificado'=>'required|size:11|unique:certificates,codigo_certificado',
             'ini_vigencia'=>'required|date_format:Y-m-d',
             'fin_vigencia'=>'required|date_format:Y-m-d', 
             'ini_control'=>'required|date_format:Y-m-d',
@@ -56,8 +56,8 @@ class CertificateController extends Controller
         ]);
         $cert = new Certificate();
         $clave = explode("-",$data['codigo_certificado']);
-        $cert->correlativo=$clave[1];
-        $cert->anio=$clave[2];
+        $cert->correlativo=$clave[0];
+        $cert->anio=$clave[1];
         $cert->codigo_certificado = $data['codigo_certificado'];
         $cert->ini_vigencia=date_format(date_create($data['ini_vigencia']), 'Y-m-d H:i:s');
         $cert->fin_vigencia=date_format(date_create($data['fin_vigencia']), 'Y-m-d H:i:s');

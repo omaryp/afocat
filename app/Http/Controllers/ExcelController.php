@@ -74,7 +74,7 @@ class ExcelController extends Controller
 
     public static function validator($data){
         $validator = Validator::make($data, [
-            'codigo_certificado' => ['required','string','max:14'],
+            'codigo_certificado' => ['required','string','max:11'],
             'fecha_emision' => ['required',new FechaValida],
             'ini_vigencia' => ['required',new FechaValida],
             'fin_vigencia' => ['required',new FechaValida],

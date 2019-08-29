@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Certificate;
+use App\Models\Parametro;
 
 class ConsultaController extends Controller
 {
@@ -33,4 +34,13 @@ class ConsultaController extends Controller
                 ], 200);
             }
     }
+
+    public function config(){
+        $parametros = Parametro::Select('parametros.codtab','parametros.valent')->where('codigo','=',2)->where('codtab','<>','')->get();
+        return response()->json([
+            'success' => true,
+            'config' => $parametros,
+            'mensaje' => 'Datos de configuracion !!!',
+        ], 200);
+    }   
 }

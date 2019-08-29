@@ -74,3 +74,4 @@ Route::put('/users/{codigo}','Auth\RegisterController@update')
 
 //ruta para consulta externa
 Route::get('/consulta/{placa}',array('middleware' => 'cors', 'uses' => 'ConsultaController@consulta'));
+Route::get('/configuracion',array('middleware' => 'cors', 'uses' => 'ConsultaController@config'));
