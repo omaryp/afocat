@@ -65,9 +65,12 @@ class ExcelController extends Controller
         $excel = Excel::toArray(new CertificateImport, $ruta);
         $filasExcel = $excel[0];
         foreach ($filasExcel as $key => $row) {
-            $row['nro_documento'] = str_pad($row['nro_documento'], 8 , "0");   
-            $errors[$fila] = ExcelController::validator($row);
-            $fila++;
+            $row['nro_documento'] = str_pad($row['nro_documento'], 8 , "0");  
+            $errores = ExcelController::validator($row);
+            if($errores != NULL){
+                $errors[$fila] = 
+                $fila++;
+            }
         }
         return $errors;
     }
