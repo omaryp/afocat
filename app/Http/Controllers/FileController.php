@@ -45,9 +45,7 @@ class FileController extends Controller
             'archivo'=>'required|mimes:xlsx,xls',
             'name'=>'unique:file_loads,nombre'
         ];  
-    
         $validar = Validator::make($data, $reglas);
-            
         if ($validar->passes()) {
             $ruta_servidor = $file->store('fileafocat');
             FileLoadController::store($data['name'],$ruta_servidor);

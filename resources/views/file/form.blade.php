@@ -61,9 +61,9 @@
                                             <td>{{ $file->fecha_carga }}</td>
                                             <td>{{ $file->ubicacion }}</td>
                                             <td> 
-                                                <div class="load btn" ></div>
-                                                <button type="button" codigo="{{ $file->id }}" class="eliminar btn btn-outline-secondary btn-sm @if($file->estado != 0) d-none @endif"><i class="fas fa-fw fa-trash-alt"></i></button>
-                                                <button type="button" codigo="{{ $file->id }}" class="procesar btn btn-outline-secondary btn-sm @if($file->estado != 0) d-none @endif"><i class="fas fa-fw fa-play-circle"></i></button>
+                                                <div class="load{{ $loop->iteration }} btn" ></div>
+                                                <button type="button" nro="{{ $loop->iteration }}" codigo="{{ $file->id }}" class="eliminar btn btn-outline-secondary btn-sm @if($file->estado != 0) d-none @endif"><i class="fas fa-fw fa-trash-alt"></i></button>
+                                                <button type="button" nro="{{ $loop->iteration }}" codigo="{{ $file->id }}" class="procesar btn btn-outline-secondary btn-sm @if($file->estado != 0) d-none @endif"><i class="fas fa-fw fa-play-circle"></i></button>
                                             </td>   
                                         </tr>
                                     @empty 
@@ -123,12 +123,20 @@
     $(document).ready(function(){
 
         $( "tbody").on("click", "button.eliminar",function(){
-            eliminarArchivo($(this).attr('codigo'));
+            var rpta = confirm("Desea eliminar archivo?");
+            if(rpta)
+                eliminarArchivo($(this).attr('codigo'));
         });
 
         $( "tbody").on("click", "button.procesar",function(){
-            $("tbody div.load").html('<img src="{{ asset('images/load.gif') }}"/>');
-            procesarArchivo($(this).attr('codigo'));
+            var rpta = confirm("Desea procesar archivo?");
+            var nro;
+            if(rpta){
+                nro = $(this).attr('nro');
+                $("tbody div.load"+nro).html('<img src="{{ asset('images/load.gif') }}"/>');
+                procesarArchivo($(this).attr('codigo'));
+                $("tbody div.load"+nro).empty();
+            }
         });
 
     });

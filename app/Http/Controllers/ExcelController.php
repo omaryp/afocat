@@ -68,7 +68,7 @@ class ExcelController extends Controller
             $row['nro_documento'] = str_pad($row['nro_documento'], 8 , "0");  
             $errores = ExcelController::validator($row);
             if($errores != NULL){
-                $errors[$fila] = 
+                $errors[$fila] = $errores;
                 $fila++;
             }
         }
@@ -77,7 +77,7 @@ class ExcelController extends Controller
 
     public static function validator($data){
         $validator = Validator::make($data, [
-            'codigo_certificado' => ['required','string','max:11'],
+            'codigo_certificado' => ['required','string','max:11','unique:certificates,codigo_certificado'],
             'fecha_emision' => ['required',new FechaValida],
             'ini_vigencia' => ['required',new FechaValida],
             'fin_vigencia' => ['required',new FechaValida],
