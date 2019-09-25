@@ -17,8 +17,8 @@ function ajax_post(ruta,datos){
 function ajax_delete(ruta,datos){
     $.ajax({
         data: datos,
-        type: "DELETE",
-        dataType: "json",
+        type: 'GET',
+        dataType: 'json',
         url: ruta,
     })
     .done(function( rpta, textStatus, jqXHR ) {

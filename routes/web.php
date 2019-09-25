@@ -27,9 +27,8 @@ Route::post('/logout','Auth\LoginController@logout')->name('logout');
 
 Route::get('/storage', 'FileController@index')->name('storage');
 Route::post('/load', 'FileController@load');
-Route::delete('/storage/{id}','FileController@destroy')
+Route::get('/storage/{id}','FileController@destroy')
 ->where('id','[0-9]+');
-
 
 Route::post('/excel','ExcelController@procesar')->name('excel');
 

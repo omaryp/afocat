@@ -36,6 +36,7 @@ class MenuController extends Controller
             ->leftjoin('menus','options.codigo','=','menus.menu_id')
             ->where('menus.users_id','=',$usuariocodigo)
             ->orderBy('options.orden', 'asc')->get();
+        dd($opciones);
         return $opciones;
     }
 

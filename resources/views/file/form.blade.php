@@ -138,7 +138,7 @@
     }
 
     function eliminarArchivo(codigo){
-        ajax_delete( '{{ url('storage') }}/'+codigo,{_token: '{!! csrf_token() !!}'});
+        ajax_delete( '{{ url('storage') }}/'+codigo,{_token: '{!! csrf_token() !!}',_method:'DELETE'});
     }
 
     function procesar_rpta(rpta){

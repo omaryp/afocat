@@ -30,10 +30,10 @@ class FechaValida implements Rule
         $rpta = TRUE;
         try {
             $fecha = Date::excelToDateTimeObject($value);
+            $data[$attribute] = $fecha;
         } catch (\Throwable $th) {
             $rpta = FALSE;
         }
-        $data[$attribute] = Date::excelToDateTimeObject($value);
         return ($rpta && FechaValida::validator($attribute,$data));
     }
 
