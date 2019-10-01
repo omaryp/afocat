@@ -4,9 +4,9 @@
 @foreach ($errores as $errorfila)
     @if($errorfila != null)
         <div class="alert alert-danger">
-            <div>La fila {{ $loop->index }} del excel cargado presenta los siguientes errores : </div>
+            <div>La fila {{ $errorfila['fila'] }} del excel cargado presenta los siguientes errores : </div>
             <ul>
-                @foreach ($errorfila as $error)
+                @foreach ($errorfila['errores'] as $error)
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>  

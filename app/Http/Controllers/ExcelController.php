@@ -62,15 +62,19 @@ class ExcelController extends Controller
     public static function validarExcel($ruta){
         $errors = array();
         $fila = 0;
+        $fila_excel = 1;
         $excel = Excel::toArray(new CertificateImport, $ruta);
         $filasExcel = $excel[0];
         foreach ($filasExcel as $key => $row) {
             $row['nro_documento'] = str_pad($row['nro_documento'], 8 , "0");  
             $errores = ExcelController::validator($row);
             if($errores != NULL){
-                $errors[$fila] = $errores;
+                $msgError['fila'] = $fila_excel;
+                $msgError['errores'] = $errores;
+                $errors[$fila] = $msgError;
                 $fila++;
             }
+            $fila_excel++;
         }
         return $errors;
     }

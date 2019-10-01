@@ -1,6 +1,7 @@
 
 function ajax_post(ruta,datos){
     $.ajax({
+        async:false,
         data: datos,
         type: "POST",
         dataType: "json",
@@ -16,6 +17,7 @@ function ajax_post(ruta,datos){
 
 function ajax_delete(ruta,datos){
     $.ajax({
+        async:false,
         data: datos,
         type: 'GET',
         dataType: 'json',

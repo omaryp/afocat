@@ -61,7 +61,7 @@
                                             <td>{{ $file->fecha_carga }}</td>
                                             <td>{{ $file->ubicacion }}</td>
                                             <td> 
-                                                <div class="load{{ $loop->iteration }} btn" ></div>
+                                                <div id="load{{ $loop->iteration }}" class="btn" ></div>
                                                 <button type="button" nro="{{ $loop->iteration }}" codigo="{{ $file->id }}" class="eliminar btn btn-outline-secondary btn-sm @if($file->estado != 0) d-none @endif"><i class="fas fa-fw fa-trash-alt"></i></button>
                                                 <button type="button" nro="{{ $loop->iteration }}" codigo="{{ $file->id }}" class="procesar btn btn-outline-secondary btn-sm @if($file->estado != 0) d-none @endif"><i class="fas fa-fw fa-play-circle"></i></button>
                                             </td>   
@@ -133,9 +133,9 @@
             var nro;
             if(rpta){
                 nro = $(this).attr('nro');
-                $("tbody div.load"+nro).html('<img src="{{ asset('images/load.gif') }}"/>');
+                $("tbody #load"+nro).html('<img src="{{ asset('images/load.gif') }}"/>');
                 procesarArchivo($(this).attr('codigo'));
-                $("tbody div.load"+nro).empty();
+                $("tbody #load"+nro).empty();
             }
         });
 
