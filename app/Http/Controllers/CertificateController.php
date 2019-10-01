@@ -140,7 +140,7 @@ class CertificateController extends Controller
 
     public function update($codigo){
         $data = request()->validate([
-            'codigo_certificado'=>'string|required|size:14',
+            'codigo_certificado'=>'string|required|size:11',
             'ini_vigencia'=>'required|date_format:Y-m-d',
             'fin_vigencia'=>'required|date_format:Y-m-d', 
             'ini_control'=>'required|date_format:Y-m-d',
