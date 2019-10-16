@@ -20,6 +20,7 @@ class ConsultaController extends Controller
                  'certificates.fin_control', 
                  'certificates.placa')
                 ->where('certificates.placa','=',$placa)
+                ->orderby('fin_vigencia','desc')
                 ->get()->first();
             if($certificate != null){
                 return response()->json([

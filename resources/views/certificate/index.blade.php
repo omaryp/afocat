@@ -15,6 +15,20 @@
         <h6 class="m-0 font-weight-bold text-primary">{{ $title }}</h6>
     </div>
     <div class="card-body">
+        <form action="{{ route('certificates.search') }}" method="post">
+            {!! csrf_field() !!}
+            <div class="row">
+                <div class="col-md-1 mb-3">
+                    <label style="padding-top:8px" class="font-weight-bold" for="nro_placa" >Nro. Placa : </label>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <input type="text" class="form-control form-control-sm" name = "nro_placa" id="nro_placa" placeholder="Example 1849-BP"/>
+                </div>
+                <div class="col-md-1 mb-3">
+                    <button type="submit" class="btn border btn-primary btn-sm">Buscar</button>
+                </div>
+            </div>
+        </form>
         <div class="table-responsive">
             <table class="table table-striped table-sm">
             <thead>
@@ -39,6 +53,7 @@
                             <div class="btn-group mr-2">
                                 <a href="{{ route('certificates.show',['codigo'=> $cert->id]) }}" class="btn btn-outline-secondary btn-sm"><i class="fas fa-fw fa-check-square"></i></a>
                                 <a href="{{ route('certificates.edit',['codigo'=> $cert->id]) }}" class="btn btn-outline-secondary btn-sm"><i class="fas fa-fw fa-pen-square"></i></a>
+                                <a href="{{ route('certificates.delete',['codigo'=> $cert->id]) }}" class="btn btn-outline-secondary btn-sm"><i class="fas fa-fw fa-trash"></i></a>
                             </div>
                         </td>   
                     </tr>

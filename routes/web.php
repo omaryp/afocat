@@ -52,6 +52,10 @@ Route::get('/certificates/editar/{codigo}','CertificateController@edit')
 Route::put('/certificates/{codigo}','CertificateController@update')
 ->name('certificates.update');
 
+Route::post('/certificates/search','CertificateController@search')->name('certificates.search');
+
+Route::get('/certificates/delete/{codigo}','CertificateController@delete')->name('certificates.delete');
+
 //usuarios
 Route::get('/users','Auth\RegisterController@index')->name('users');
 

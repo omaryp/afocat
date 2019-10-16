@@ -13,19 +13,24 @@ class CertificateController extends Controller
     }
 
     public function index(){
+        $datos = $this->listarTodo();
+        return view('certificate.index',$datos);
+    }
+
+    public function listarTodo(){
         $certificates = Certificate::
-             select('certificates.id', 
-                    'certificates.codigo_certificado',
-                    'certificates.ini_vigencia',
-                    'certificates.fin_vigencia',
-                    'certificates.razon_social',
-                    'certificates.tipo_documento',
-                    'certificates.placa')
-                ->orderBy('certificates.codigo_certificado', 'asc')
-                ->paginate(10);
-        $title = 'Listado de Ventas de Certificados';  
-        $opciones = MenuController::getMenu(auth()->user()->id);
-        return view('certificate.index',compact('certificates','title','opciones'));
+            select('certificates.id', 
+                   'certificates.codigo_certificado',
+                   'certificates.ini_vigencia',
+                   'certificates.fin_vigencia',
+                   'certificates.razon_social',
+                   'certificates.tipo_documento',
+                   'certificates.placa')
+               ->orderBy('certificates.codigo_certificado', 'asc')
+               ->paginate(10);
+       $title = 'Listado de Ventas de Certificados';  
+       $opciones = MenuController::getMenu(auth()->user()->id);
+       return compact('certificates','title','opciones');
     }
 
     public function create(){
@@ -107,6 +112,24 @@ class CertificateController extends Controller
         return view('certificate.form',compact('certificate','activo','title','opciones'));
     }
 
+    public function search(){
+        $data = request()->all();
+        $codigo = $data['nro_placa'];
+        $certificates = Certificate::
+            select('certificates.id', 
+                   'certificates.codigo_certificado',
+                   'certificates.ini_vigencia',
+                   'certificates.fin_vigencia',
+                   'certificates.razon_social',
+                   'certificates.tipo_documento',
+                   'certificates.placa')
+               ->where('certificates.placa','like',$codigo."%")
+               ->paginate(10);
+       $title = 'Listado de Ventas de Certificados';  
+       $opciones = MenuController::getMenu(auth()->user()->id);
+       return view('certificate.index',compact('certificates','title','opciones'));
+    }
+
     public function edit($codigo){
         $certificate = Certificate::select(
             'certificates.id', 
@@ -136,6 +159,12 @@ class CertificateController extends Controller
         $opciones = MenuController::getMenu(auth()->user()->id);
         $datos_vista = compact('activo','title','certificate','opciones');
         return view('certificate.form',$datos_vista);
+    }
+
+    public function delete($codigo){
+        Certificate::where('certificates.id','=',$codigo)->delete();
+        $datos = $this->listarTodo();
+        return view('certificate.index',$datos);
     }
 
     public function update($codigo){
