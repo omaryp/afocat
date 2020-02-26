@@ -113,21 +113,39 @@ class CertificateController extends Controller
     }
 
     public function search(){
+        $certificates = NULL;
         $data = request()->all();
-        $codigo = $data['nro_placa'];
-        $certificates = Certificate::
-            select('certificates.id', 
-                   'certificates.codigo_certificado',
-                   'certificates.ini_vigencia',
-                   'certificates.fin_vigencia',
-                   'certificates.razon_social',
-                   'certificates.tipo_documento',
-                   'certificates.placa')
-               ->where('certificates.placa','like',$codigo."%")
-               ->paginate(10);
-       $title = 'Listado de Ventas de Certificados';  
-       $opciones = MenuController::getMenu(auth()->user()->id);
-       return view('certificate.index',compact('certificates','title','opciones'));
+        $busqueda = $data['cmbBusqueda'];
+        $dato = $data['dato_busqueda'];
+        switch ($busqueda) {
+            case '1':
+                $certificates = Certificate::
+                    select('certificates.id', 
+                           'certificates.codigo_certificado',
+                           'certificates.ini_vigencia',
+                           'certificates.fin_vigencia',
+                           'certificates.razon_social',
+                           'certificates.tipo_documento',
+                           'certificates.placa')
+                    ->where('certificates.placa','like',$dato."%")
+                    ->paginate(10);
+                break;
+            case '2':
+                $certificates = Certificate::
+                select('certificates.id', 
+                       'certificates.codigo_certificado',
+                       'certificates.ini_vigencia',
+                       'certificates.fin_vigencia',
+                       'certificates.razon_social',
+                       'certificates.tipo_documento',
+                       'certificates.placa')
+                ->where('certificates.codigo_certificado','like',$dato."%")
+                ->paginate(10);
+                break;
+        }
+        $title = 'Listado de Ventas de Certificados';  
+        $opciones = MenuController::getMenu(auth()->user()->id);
+        return view('certificate.index',compact('certificates','title','opciones'));
     }
 
     public function edit($codigo){

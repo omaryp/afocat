@@ -19,10 +19,16 @@
             {!! csrf_field() !!}
             <div class="row">
                 <div class="col-md-1 mb-3">
-                    <label style="padding-top:8px" class="font-weight-bold" for="nro_placa" >Nro. Placa : </label>
+                    <label style="padding-top:8px" class="font-weight-bold" for="cmb_busqueda" >Buscar por : </label>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <select class="custom-select" id="cmbBusqueda" name="cmbBusqueda">
+                      <option value="1">Placa</option>
+                      <option value="2">Nro. Certificado</option>
+                    </select>
                 </div>
                 <div class="col-md-3 mb-3">
-                    <input type="text" class="form-control form-control-sm" name = "nro_placa" id="nro_placa" placeholder="Example 1849-BP"/>
+                    <input type="text" class="form-control form-control-sm" name = "dato_busqueda" id="dato_busqueda" placeholder="Example 1849-BP / 0001245-2019"/>
                 </div>
                 <div class="col-md-1 mb-3">
                     <button type="submit" class="btn border btn-primary btn-sm">Buscar</button>
